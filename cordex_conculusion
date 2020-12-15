@@ -1,0 +1,510 @@
+#$!/bin/bash
+dir4=/home/isikhamza/Desktop/CORDEX-TAS/AFR/histo
+cd $dir4
+echo "CV YCV TIMMEAN FARKTIMMEAN ABSFARKTIMMEAN STD YSTD TTEST YTTEST TIMCOR YTIMCOR TIMVAR YTIMVAR" >klas
+
+for kla in $(cat klas)
+do
+cd $kla
+arra=(DJF MAM JJA SON ANNUAL)
+for il in "${arra[@]}"
+do
+cd $il
+#ls *.jpeg >listjpeg
+#for line in $(cat list)
+#do
+#sed 's/_list.txt.ps//' $line >/dir4/
+#done
+mkdir -p $dir4/CONCLUSION/NC/$kla/$il $dir4/CONCLUSION/GRAPH/PS/$kla/$il $dir4/CONCLUSION/GRAPH/JPG/$kla/$il $dir4/CONCLUSION/TABLE/$kla/$il $dir4/CONCLUSION/CODE/$kla/$il $dir4/CONCLUSION/TABLE/$kla/$il/
+#pwd
+ls *.nc *.nc4 >listmodel
+mkdir TXTICIN
+for line6 in $(cat listmodel)
+do
+cdo infov $line6 >./TXTICIN/$line6.txt
+sed 1d ./TXTICIN/$line6.txt >./TXTICIN/s$line6.txt
+awk {'print $10'} ./TXTICIN/s$line6.txt >$kla$il$line6.txt
+done
+cp $kla$il*.txt $dir4/CONCLUSION/TABLE/$kla/$il/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/$kla/$il/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/$kla/$il/
+cp *.ncl $dir4/CONCLUSION/CODE/$kla/$il/
+cp *.nc* $dir4/CONCLUSION/NC/$kla/$il/
+pwd
+cd ..
+done
+cd ..
+done
+cd ./EU-OBS/merge
+ls *.nc *.nc4 >listobs
+mkdir TXTICIN
+for line7 in $(cat listobs)
+do
+cdo infov $line7 >./TXTICIN/$line7.txt
+sed 1d ./TXTICIN/$line7.txt >./TXTICIN/s$line7.txt
+awk {'print $10'} ./TXTICIN/s$line7.txt >obs$line7.txt
+done
+mkdir -p $dir4/CONCLUSION/NC/OBS/SERIES $dir4/CONCLUSION/NC/OBS/TIMMEAN $dir4/CONCLUSION/NC/OBS/YTIMMEAN $dir4/CONCLUSION/TABLE/OBS/SERIES $dir4/CONCLUSION/TABLE/OBS/TIMMEAN $dir4/CONCLUSION/TABLE/OBS/YTIMMEAN $dir4/CONCLUSION/GRAPH/PS/OBS/TIMMEAN $dir4/CONCLUSION/GRAPH/PS/OBS/TIMMEAN $dir4/CONCLUSION/GRAPH/PS/OBS/YTIMMEAN $dir4/CONCLUSION/GRAPH/PS/OBS/YTIMMEAN $dir4/CONCLUSION/GRAPH/JPG/OBS/TIMMEAN $dir4/CONCLUSION/GRAPH/JPG/OBS/TIMMEAN $dir4/CONCLUSION/GRAPH/JPG/OBS/YTIMMEAN $dir4/CONCLUSION/GRAPH/JPG/OBS/YTIMMEAN
+cp *.nc* $dir4/CONCLUSION/NC/OBS/SERIES/ 
+cp obs*.txt $dir4/CONCLUSION/TABLE/OBS/SERIES/
+
+cd ./TIMMEAN
+mkdir TXTICIN
+ls *.nc *.nc4 >listobst
+for line8 in $(cat listobst)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >timmeanobs$line8.txt
+done
+
+cp *.nc* $dir4/CONCLUSION/NC/OBS/TIMMEAN/
+cp obs*.txt $dir4/CONCLUSION/TABLE/OBS/TIMMEAN/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/OBS/TIMMEAN/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/OBS/TIMMEAN/
+
+cd ../YTIMMEAN
+mkdir TXTICIN
+ls *.nc *.nc4 >listobst
+for line8 in $(cat listobst)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >ytimmeanobs$line8.txt
+done
+
+cp *.nc* $dir4/CONCLUSION/NC/OBS/YTIMMEAN/
+cp obs*.txt $dir4/CONCLUSION/TABLE/OBS/YTIMMEAN/
+cd ../../../
+cd $dir4
+
+mkdir -p $dir4/CONCLUSION/GRAPH/PS/ENSEMBLE $dir4/CONCLUSION/GRAPH/JPG/ENSEMBLE $dir4/CONCLUSION/TABLE/ENSEMBLE $dir4/CONCLUSION/NC/ENSEMBLE $dir4/CONCLUSION/NC/$il2/SUM/ $dir4/CONCLUSION/GRAPH/JPG/$il2/SUM/ $dir4/CONCLUSION/GRAPH/PS/$il2/SUM/
+arra2=(RESULT RESULTRMSE RESULTTIMCOR RESULTTTEST RESULTYTIMCOR RESULTYTTEST)
+for il2 in "${arra2[@]}"
+do
+cd $il2
+pwd
+mkdir -p $dir4/CONCLUSION/GRAPH/PS/$il2/DJF $dir4/CONCLUSION/GRAPH/PS/$il2/MAM $dir4/CONCLUSION/GRAPH/PS/$il2/JJA $dir4/CONCLUSION/GRAPH/PS/$il2/SON $dir4/CONCLUSION/GRAPH/PS/$il2/ANNUAL
+mkdir -p $dir4/CONCLUSION/GRAPH/JPG/$il2/DJF $dir4/CONCLUSION/GRAPH/JPG/$il2/MAM $dir4/CONCLUSION/GRAPH/JPG/$il2/JJA $dir4/CONCLUSION/GRAPH/JPG/$il2/SON $dir4/CONCLUSION/GRAPH/JPG/$il2/ANNUAL
+mkdir -p $dir4/CONCLUSION/NC/$il2/DJF $dir4/CONCLUSION/NC/$il2/MAM $dir4/CONCLUSION/NC/$il2/JJA $dir4/CONCLUSION/NC/$il2/SON $dir4/CONCLUSION/NC/$il2/ANNUAL
+mkdir -p $dir4/CONCLUSION/NC/$il2/RESULT1 $dir4/CONCLUSION/NC/$il2/RESULT2 $dir4/CONCLUSION/NC/$il2/RESULT3 $dir4/CONCLUSION/NC/$il2/RESULT4 $dir4/CONCLUSION/NC/$il2/RESULT5 $dir4/CONCLUSION/NC/$il2/RESULT6 $dir4/CONCLUSION/NC/$il2/RESULT7 $dir4/CONCLUSION/NC/$il2/RESULT8 $dir4/CONCLUSION/GRAPH/PS/$il2 $dir4/CONCLUSION/GRAPH/JPG/$il2 $dir4/CONCLUSION/TABLE/$il2/RESULT1 $dir4/CONCLUSION/TABLE/$il2/RESULT2 $dir4/CONCLUSION/TABLE/$il2/RESULT3 $dir4/CONCLUSION/TABLE/$il2/RESULT4 $dir4/CONCLUSION/TABLE/$il2/RESULT5 $dir4/CONCLUSION/TABLE/$il2/RESULT6 $dir4/CONCLUSION/TABLE/$il2/RESULT7 $dir4/CONCLUSION/TABLE/$il2/RESULT8
+mkdir -p $dir4/CONCLUSION/NC/$il2/DJF -p $dir4/CONCLUSION/NC/$il2/MAM -p $dir4/CONCLUSION/NC/$il2/JJA -p $dir4/CONCLUSION/NC/$il2/SON -p $dir4/CONCLUSION/NC/$il2/ANNUAL
+mkdir -p $dir4/CONCLUSION/GRAPH/JPG/$il2/DJF -p $dir4/CONCLUSION/GRAPH/JPG/$il2/MAM -p $dir4/CONCLUSION/GRAPH/JPG/$il2/JJA -p $dir4/CONCLUSION/GRAPH/JPG/$il2/SON -p $dir4/CONCLUSION/GRAPH/JPG/$il2/ANNUAL
+mkdir -p $dir4/CONCLUSION/GRAPH/PS/$il2/DJF -p $dir4/CONCLUSION/GRAPH/PS/$il2/MAM -p $dir4/CONCLUSION/GRAPH/PS/$il2/JJA -p $dir4/CONCLUSION/GRAPH/PS/$il2/SON -p $dir4/CONCLUSION/GRAPH/PS/$il2/ANNUAL 
+mkdir -p $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/SUM/ $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/SUM/ $dir4/CONCLUSION/NC/RESULT$il3/SUM/
+cp ./RESULT1/*.nc $dir4/CONCLUSION/NC/$il2/RESULT1/
+cp ./RESULT1/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT1/
+cp ./RESULT1/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT1/
+cp ./RESULT1/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT1/
+cp ./RESULT2/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT2/
+cp ./RESULT2/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT2/
+cp ./RESULT3/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT3/
+cp ./RESULT3/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT3/
+cp ./RESULT4/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT4/
+cp ./RESULT4/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT4/
+cp ./RESULT5/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT5/
+cp ./RESULT5/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT5/
+cp ./RESULT6/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT6/
+cp ./RESULT6/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT6/
+cp ./RESULT7/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT7/
+cp ./RESULT7/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT7/
+cp ./RESULT8/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT8/
+cp ./RESULT8/FARK/*.txt $dir4/CONCLUSION/TABLE/$il2/RESULT8/
+cp ./RESULT2/*.nc $dir4/CONCLUSION/NC/$il2/RESULT2/
+cp ./RESULT2/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT2/
+cp ./RESULT3/*.nc $dir4/CONCLUSION/NC/$il2/RESULT3/
+cp ./RESULT3/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT3/
+cp ./RESULT4/*.nc $dir4/CONCLUSION/NC/$il2/RESULT4/
+cp ./RESULT4/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT4/
+cp ./RESULT5/*.nc $dir4/CONCLUSION/NC/$il2/RESULT5/
+cp ./RESULT5/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT5/
+cp ./RESULT6/*.nc $dir4/CONCLUSION/NC/$il2/RESULT6/
+cp ./RESULT6/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT6/
+cp ./RESULT7/*.nc $dir4/CONCLUSION/NC/$il2/RESULT7/
+cp ./RESULT7/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT7/
+cp ./RESULT8/*.nc $dir4/CONCLUSION/NC/$il2/RESULT8/
+cp ./RESULT8/FARK/*.nc $dir4/CONCLUSION/NC/$il2/RESULT8/
+cp *.ncl $dir4/CONCLUSION/NC/$il2/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/$il2/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/$il2/
+#cp -rf MODELS $dir4/CONCLUSION/NC/$il2/SUM
+cp ./MODELS2/limit*.nc $dir4/CONCLUSION/NC/$il2/
+cp ./MODELS2/LIMIT*.ps $dir4/CONCLUSION/GRAPH/PS/$il2/
+cp ./MODELS2/LIMIT*jpg $dir4/CONCLUSION/GRAPH/JPG/$il2/
+cp ./MODELS2/limit.ncl $dir4/CONCLUSION/NC/$il2/
+pwd
+cd ..
+done
+
+cd $dir4/RESULTS/RESULTENSEMBLE
+cp *.nc $dir4/CONCLUSION/NC/ENSEMBLE/
+cp *.nc4 $dir4/CONCLUSION/NC/ENSEMBLE/
+cp *.txt $dir4/CONCLUSION/TABLE/ENSEMBLE/
+
+
+cd $dir4
+arra3=(RMSE TIMCOR TTEST YTIMCOR YTTEST)
+for il3 in "${arra3[@]}"
+do
+mkdir -p $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/SUM/ $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/SUM/ $dir4/CONCLUSION/NC/RESULT$il3/SUM/
+cd ./METHOD$il3
+cp ENSMEAN*.nc* $dir4/CONCLUSION/NC/RESULT$il3/
+cp *.ncl $dir4/CONCLUSION/NC/RESULT$il3/
+cp RESULT*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cd ./DJF
+cp ../../METHOD$il3/DJF/*.ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >DJF$il3$line8.txt
+done
+cp DJF$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/DJF/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/DJF/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/DJF/
+
+cd ../MAM
+cp ../../METHOD$il3/MAM/*.ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >MAM$il3$line8.txt
+done
+cp MAM$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/MAM/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/MAM/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/MAM/
+mkdir TXTICIN
+cd ../JJA
+cp ../../METHOD$il3/JJA/*.ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >JJA$il3$line8.txt
+done
+cp JJA$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/JJA/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/JJA/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/JJA/
+mkdir TXTICIN
+cd ../SON
+cp ../../METHOD$il3/SON/*.ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+ls *.nc *.nc4 >listt
+mkdir TXTICIN
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >SON$il3$line8.txt
+done
+cp SON$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/SON/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/SON/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/SON/
+cd ../ANNUAL
+cp ../../METHOD$il3/ANNUAL/*.ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >ANNUAL$il3$line8.txt
+done
+cp ANNUAL$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/ANNUAL/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/ANNUAL/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/ANNUAL/
+
+cd ..
+cd ./ANALIZ/SUM
+mkdir ARA
+ls *.nc >listnc
+for line in  listnc
+do
+sed 's/tas_AFR-44_//' $line >./ARA/$line
+sed 's/_historical_//' ./ARA/$line >./ARA/a$line
+sed 's/r1i1p1_//' ./ARA/a$line >./ARA/b$line
+sed 's/r12i1p1_//' ./ARA/b$line >./ARA/c$line
+sed 's/r3i1p1_//' ./ARA/c$line >d$line
+done
+paste listnc dlistnc >elistnc
+awk '{print "mv "$1" "$2}' elistnc >move
+chmod +x move
+./move
+cp ../SELECT_1/MODELS/*ncl .
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/SUM/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/SUM/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/SUM/
+
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >SUM$il3$line8.txt
+done
+cp SUM$il3*.txt $dir4/CONCLUSION/TABLE/RESULT$il3/
+#cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/SUM/
+cd ../../
+cd ./ANALIZ/SELECT_1/MODELS
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/
+ls *.nc *.nc4 >listt
+mkdir TXTICIN
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >MODEL$il3$line8.txt
+done
+cp MODEL$il3*.txt $dir4/CONCLUSION/TABLE/$il2/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/
+cp ./TESTSVM1/SONUC_run.txt $dir4/CONCLUSION/TABLE/RESULT$il3/SVM1_SONUC.txt
+cp ./TESTSVM2/SONUC_run.txt $dir4/CONCLUSION/TABLE/RESULT$il3/SVM2_SONUC.txt
+pwd
+cd ../../../
+#arra5=(DJF MAM JJA SON ANNUAL)
+#for il5 in "${arra5[@]}"
+#do
+#pwd
+#cp ./$il5/*.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/$il5/
+#cp ./$il5/*.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/$il5/
+#cp ./$il5/*.nc* $dir4/CONCLUSION/NC/RESULT$il3/$il5/
+#cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT$il3/
+#cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT$il3/
+#cp *.nc* $dir4/CONCLUSION/NC/RESULT$il3/
+
+#done
+cd ../
+done
+cd $dir4
+
+arra3=(METHOD)
+for il3 in "${arra3[@]}"
+do
+cd ./$il3
+cp ENSMEAN*.nc* $dir4/CONCLUSION/NC/RESULT/
+cp *.ncl $dir4/CONCLUSION/NC/RESULT/
+cp RESULT*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cd ./DJF
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >DJF$il3$line8.txt
+done
+cp DJF$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/DJF/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/DJF/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/DJF/
+
+cd ../MAM
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >MAM$il3$line8.txt
+done
+cp MAM$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/MAM/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/MAM/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/MAM/
+
+cd ../JJA
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >JJA$il3$line8.txt
+done
+cp JJA$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/JJA/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/JJA/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/JJA/
+
+cd ../SON
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >SON$il3$line8.txt
+done
+cp SON$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/SON/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/SON/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/SON/
+cd ../ANNUAL
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >ANNUAL$il3$line8.txt
+done
+cp ANNUAL$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/ANNUAL/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/ANNUAL/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/ANNUAL/
+
+cd ..
+cd ./ANALIZ/SUM
+mkdir ARA
+ls *.nc >listnc
+for line in  listnc
+do
+sed 's/tas_AFR-44_//' $line >./ARA/$line
+sed 's/_historical_//' ./ARA/$line >./ARA/a$line
+sed 's/r1i1p1_//' ./ARA/a$line >./ARA/b$line
+sed 's/r12i1p1_//' ./ARA/b$line >./ARA/c$line
+sed 's/r3i1p1_//' ./ARA/c$line >d$line
+done
+paste listnc dlistnc >elistnc
+awk '{print "mv "$1" "$2}' elistnc >move
+chmod +x move
+./move
+cp ../SELECT_1/MODELS/*.ncl
+ls *.ncl >listncl
+for line in $(cat listncl)
+do
+ncl $line
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/SUM/
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/SUM/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/SUM/
+mkdir TXTICIN
+ls *.nc *.nc4 >listt
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >SUM$il3$line8.txt
+done
+cp SUM$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+#cp *.nc* $dir4/CONCLUSION/NC/RESULT/SUM/
+cd ../../
+cd ./ANALIZ/SELECT_1/MODELS
+cp *.ps $dir4/CONCLUSION/GRAPH/PS/RESULT/
+cp *.jpg $dir4/CONCLUSION/GRAPH/JPG/RESULT/
+ls *.nc *.nc4 >listt
+mkdir TXTICIN
+for line8 in $(cat listt)
+do
+cdo infov $line8 >./TXTICIN/$line8.txt
+sed 1d ./TXTICIN/$line8.txt >./TXTICIN/s$line8.txt
+awk {'print $10'} ./TXTICIN/s$line8.txt >MODEL$il3$line8.txt
+done
+cp MODEL$il3*.txt $dir4/CONCLUSION/TABLE/RESULT/
+cp *.nc* $dir4/CONCLUSION/NC/RESULT/
+cp ./TESTSVM1/SONUC_run.txt $dir4/CONCLUSION/TABLE/RESULT/SVM1_SONUC.txt
+cp ./TESTSVM2/SONUC_run.txt $dir4/CONCLUSION/TABLE/RESULT/SVM2_SONUC.txt
+pwd
+cd ../../../
+cd ../
+done
+cd $dir4
+
+for line in $(cat list3)
+do
+cd ./$line/
+mv ./merge/*.nc .
+mkdir TXTICIN
+ls *.nc* >list
+for line2 in $(cat list)
+do
+cdo infov $line2 >./TXTICIN/$line2.txt
+sed 1d ./TXTICIN/$line2.txt >./TXTICIN/s$line2.txt
+awk {'print $10'} ./TXTICIN/s$line2.txt >$line$line2.txt
+cp *.txt $dir4/CONCLUSION/TABLE/
+#rm -rf merge
+#rm -rf TXTICIN
+done
+cd ../
+done
+#rm -rf CV YCV TIMMEAN FARKTIMMEAN ABSFARKTIMMEAN STD YSTD TTEST YTTEST TIMCOR YTIMCOR TIMVAR YTIMVAR
+

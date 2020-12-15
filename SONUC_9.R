@@ -1,0 +1,23 @@
+unsucess<-as.matrix(read.table("./UNSUCESS/UNSUCESS.txt"))
+sucess<-as.matrix(read.table("./SUCESS/SUCESS.txt"))
+pozitif<-as.matrix(read.table("./TRAIN/POZTIF.txt"))
+negatif<-as.matrix(read.table("./TRAIN/NEGATIF.txt"))
+min_negatif<-min(negatif)
+max_negatif<-max(negatif)
+min_pozitif<-min(pozitif)
+max_pozitif<-max(pozitif)
+min_unsucess<-min(unsucess)
+max_unsucess<-max(unsucess)
+min_sucess<-min(sucess)
+max_sucess<-max(sucess)
+abs_min<-min(min_negatif,min_pozitif,min_sucess,min_unsucess)
+abs_max<-max(max_negatif,max_pozitif,max_sucess,max_unsucess)
+bolum<-abs_max - abs_min
+norm_unsucess<-(unsucess-abs_min)/bolum
+norm_sucess<-(sucess-abs_min)/bolum
+norm_pozitif<-(pozitif-abs_min)/bolum
+norm_negatif<-(negatif-abs_min)/bolum
+write.table(norm_negatif,"norm_negatif.txt",row.names=FALSE,col.names=FALSE)
+write.table(norm_pozitif,"norm_pozitif.txt",row.names=FALSE,col.names=FALSE)
+write.table(norm_unsucess,"norm_unsucess.txt",row.names=FALSE,col.names=FALSE)
+write.table(norm_sucess,"norm_sucesss.txt",row.names=FALSE,col.names=FALSE)

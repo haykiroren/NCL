@@ -1,0 +1,3488 @@
+#$!/bin/bash
+echo " isimler basladı"
+j=27
+i=0
+# 1-) _historical_ ve p1_ awk ın içinde değiştirilmeli
+# 2-) sumlttas awk icinde degistirilmeli
+klasor1=/home/isikhamza/Desktop
+klasor2=CORDEX-TAS
+#NCL klasoru bunun ltına gelecek
+klasor3=AFR
+klasor4=histo
+klasor8=EU-OBS
+j=27
+date1=1976-2005
+#
+var1=TAS
+var2=tas
+reg=_AFR-44_
+#BU üçü elle değistirilsin simdilik
+klasor5_1=METHOD
+klasor5_2=METHODRMSE
+klasor5_3=METHODTTEST
+klasor5_4=METHODTIMCOR
+klasor5_5=METHODYTTEST
+klasor5_6=METHODYTIMCOR
+klasor6=ANALIZ
+klasor7=SELECT_1
+klasor9=merge
+klasor10_1=TIMMEAN
+klasor10_2=FARKTIMMEAN
+klasor10_3=ABSFARKTIMMEAN
+klasor11=SUM
+klasor12=MODELS
+klasor13=UNSUCESS
+klasor14=SUCESS
+klasor15=UNSUCESS2
+klasor16=SUCESS2
+klasor17=RESULTS
+klasor18=RESULTENSEMBLE
+klasor19=MODELS2
+klasor20=NCL
+test1=TEST1
+test2=TEST2
+test3=TEST3
+test4=TEST4
+test5=TEST5
+test6=TEST6
+test7=TEST7
+test8=TEST8
+test9=TESTSVM1
+test10=TESTSVM2
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7
+dir2=$klasor1/$klasor2/$klasor3/$klasor4
+dir3=$klasor1/svm_light_linux32
+dir4=$klasor1/$klasor2/$klasor3/$klasor4
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6
+dir6=$klasor1/$klasor2/$klasor3/$klasor4/$klasor8/$klasor9
+dir7=$klasor1/$klasor2/$klasor3/$klasor4/$klasor8
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULT/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/$klasor12
+dir12=$klasor1/$klasor2/$klasor3/$klasor4/$klasor8/$klasor9/$klasor10_1
+dir13=$klasor1/$klasor2/$klasor20
+dir14=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1
+dir15=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/MODELS
+dir16=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/DJF
+dir17=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/MAM
+dir18=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/JJA
+dir19=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/SON
+dir20=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/ANNUAL
+dir21=$klasor1/$klasor2/$klasor3/$klasor4/$klasor10_3
+dir22=$klasor1/$klasor2/$klasor3/$klasor4/$klasor10_2
+dir30=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1
+dir31=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2
+dir32=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3
+dir33=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4
+dir34=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5
+dir35=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6
+dir40=$klasor1/$klasor2/$klasor3/$klasor4/RESULT
+dir41=$klasor1/$klasor2/$klasor3/$klasor4/RESULTRMSE
+dir42=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTTEST
+dir43=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTIMCOR
+dir44=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTTEST
+dir45=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTIMCOR
+dir55=$klasor6/$klasor7/MODELS
+dir63=$klasor1/$klasor2/$klasor3/$klasor4/CV
+dir64=$klasor1/$klasor2/$klasor3/$klasor4/YCV
+dir65=$klasor1/$klasor2/$klasor3/$klasor4/STD
+dir66=$klasor1/$klasor2/$klasor3/$klasor4/YSTD
+dir67=$klasor1/$klasor2/$klasor3/$klasor4/TIMMEAN
+dir68=$klasor1/$klasor2/$klasor3/$klasor4/TIMVAR
+dir69=$klasor1/$klasor2/$klasor3/$klasor4/YTIMVAR
+dir70=$klasor1/$klasor2/$klasor3/$klasor4/TTEST
+dir71=$klasor1/$klasor2/$klasor3/$klasor4/YTTEST
+dir72=$klasor1/$klasor2/$klasor3/$klasor4/TIMCOR
+dir73=$klasor1/$klasor2/$klasor3/$klasor4/YTIMCOR
+name1=ENSMEAN
+
+var3=TIMESERIES_
+var4=YMEAN
+var5=YSTD_
+var6=RESULTENS_
+var7=FARKSEAS
+var8=ABSFARK
+var9=ABS
+var10=MEAN
+var11=FARK
+var12=YEAR.nc
+var13=SEAS
+ens=ENSMEAN_
+limit=LIMIT_SELECT
+lim=limit_select
+sel=sel
+obs=OBSERVATION
+symbol1=_
+symbol2=_list
+seas1=DJF
+seas2=MAM
+seas3=JJA
+seas4=SON
+seas5=ANNUAL
+# 1-) _historical_ ve p1_ awk ın içinde değiştirilmeli
+# 2-) sumlttas awk icinde degistirilmeli
+cd $dir6
+mkdir $klasor10_1
+cdo splitseas sel$var1$symbol1$date1.nc sel$var1$symbol1$date1
+ls *.nc >listobs
+for line30 in $(cat listobs)
+do
+cdo timmean $line30 ./$klasor10_1/$line30
+done
+#mkdir FORSVM
+ls sel$var1_*.nc >list7
+arr=(1 5 32 45 50 55 68 95 99)
+for line7 in $(cat list7)
+do
+cdo timmin $line7 min$line7
+cdo timmax $line7 max$line7
+for item in ${arr[*]}
+do
+cdo timpctl,$item $line7 min$line7 max$line7 pctl$item$line7
+cdo infov pctl$item$line7 >pctl$item$line7.txt
+sed 1d pctl$item$line7.txt >apctl$item$line7.txt
+awk {'print $10'} apctl$item$line7.txt >a2pctl$item$line7.txt
+done
+done
+rm apctl*.txt
+rm pctl*.txt
+#rm a2pctl*.txt
+arr2=($seas1 $seas2 $seas3 $seas4)
+for item in ${arr[*]}
+do
+paste a2pctl$item*${arr2[0]}.nc.txt a2pctl$item*${arr2[1]}.nc.txt a2pctl$item*${arr2[2]}.nc.txt a2pctl$item*${arr2[3]}.nc.txt >SONUC$item.txt
+paste a2pctl5s*${arr2[0]}.nc.txt a2pctl5s*${arr2[1]}.nc.txt a2pctl5s*${arr2[2]}.nc.txt a2pctl5s*${arr2[3]}.nc.txt >SONUC5.txt
+done
+cat SONUC1.txt SONUC5.txt SONUC95.txt SONUC99.txt >NEGATIF.txt
+cat SONUC32.txt SONUC45.txt SONUC50.txt SONUC55.txt SONUC68.txt  >POZTIF.txt
+cat SONUC* >HEPSI.txt
+mkdir YTIMMEAN
+cdo yearmean sel$var1$symbol1$date1.nc ./YTIMMEAN/sel$var1$symbol1$date1.nc
+cdo yearmean sel$var1$symbol1$date1$seas1.nc ./YTIMMEAN/sel$var1$symbol1$date1$seas1.nc
+cdo yearmean sel$var1$symbol1$date1$seas2.nc ./YTIMMEAN/sel$var1$symbol1$date1$seas2.nc
+cdo yearmean sel$var1$symbol1$date1$seas3.nc ./YTIMMEAN/sel$var1$symbol1$date1$seas3.nc
+cdo yearmean sel$var1$symbol1$date1$seas4.nc ./YTIMMEAN/sel$var1$symbol1$date1$seas4.nc
+cd $dir2
+for line in $(cat list3)
+do
+cd ./$line/$klasor9/
+mkdir $klasor10_1
+cdo splitseas $var1$symbol1$date1.nc $var1$symbol1$date1
+ls *.nc* >list4
+for line2 in $(cat list4)
+do
+cdo timmean $line2 ./$klasor10_1/$line2
+done
+mkdir FARK FARKSQUARE FARKSQUARESUM FARKSUM ARATTEST1 ARATTEST2 ARATTEST3 ARATTEST4 ARATTEST5 FARKSUMN FARKSUMSQUARE FARKSUMSQUAREN TTEST RMSE TIMCOR TIMVAR STD CV ARA
+#mkdir -p $klasor5_5/$klasor6/SELECT_1 $klasor5_5/$klasor6/SUM $klasor5_5/$klasor6/DJF $klasor5_5/$klasor6/MAM $klasor5_5/$klasor6/JJA $klasor5_5/$klasor6/SON
+mkdir YTIMMEAN YFARK YFARKSQUARE YFARKSQUARESUM YFARKSUM YARATTEST1 YARATTEST2 YARATTEST3 YARATTEST4 YARATTEST5 YFARKSUMN YFARKSUMSQUARE YFARKSUMSQUAREN YTTEST YRMSE YTIMCOR YTIMVAR YFARKSQUARESUMN YSTD YCV YARA
+mkdir -p YTTEST/DJF YTTEST/ANNUAL YTTEST/MAM YTTEST/JJA YTTEST/SON
+mkdir $klasor10_2 $klasor10_3
+cdo sub ./$klasor10_1/$var1$symbol1$date1.nc $dir6/$klasor10_1/sel$var1$symbol1$date1.nc ./$klasor10_2/$var1$symbol1$date1.nc
+cdo sub ./$klasor10_1/$var1$symbol1$date1$seas1.nc4 $dir6/$klasor10_1/sel$var1$symbol1$date1$seas1.nc ./$klasor10_2/$var1$symbol1$date1$seas1.nc
+cdo sub ./$klasor10_1/$var1$symbol1$date1$seas2.nc4 $dir6/$klasor10_1/sel$var1$symbol1$date1$seas2.nc ./$klasor10_2/$var1$symbol1$date1$seas2.nc
+cdo sub ./$klasor10_1/$var1$symbol1$date1$seas3.nc4 $dir6/$klasor10_1/sel$var1$symbol1$date1$seas3.nc ./$klasor10_2/$var1$symbol1$date1$seas3.nc
+cdo sub ./$klasor10_1/$var1$symbol1$date1$seas4.nc4 $dir6/$klasor10_1/sel$var1$symbol1$date1$seas4.nc ./$klasor10_2/$var1$symbol1$date1$seas4.nc
+cdo abs ./$klasor10_2/$var1$symbol1$date1.nc ./$klasor10_3/$var1$symbol1$date1.nc
+cdo abs ./$klasor10_2/$var1$symbol1$date1$seas1.nc ./$klasor10_3/$var1$symbol1$date1$seas1.nc
+cdo abs ./$klasor10_2/$var1$symbol1$date1$seas2.nc ./$klasor10_3/$var1$symbol1$date1$seas2.nc
+cdo abs ./$klasor10_2/$var1$symbol1$date1$seas3.nc ./$klasor10_3/$var1$symbol1$date1$seas3.nc
+cdo abs ./$klasor10_2/$var1$symbol1$date1$seas4.nc ./$klasor10_3/$var1$symbol1$date1$seas4.nc
+cdo sub $var1$symbol1$date1.nc $dir6/sel$var1$symbol1$date1.nc ./FARK/$var1$symbol1$date1.nc
+cdo sub $var1$symbol1$date1$seas1.nc4 $dir6/sel$var1$symbol1$date1$seas1.nc ./FARK/$var1$symbol1$date1$seas1.nc4
+cdo sub $var1$symbol1$date1$seas2.nc4 $dir6/sel$var1$symbol1$date1$seas2.nc ./FARK/$var1$symbol1$date1$seas2.nc4
+cdo sub $var1$symbol1$date1$seas3.nc4 $dir6/sel$var1$symbol1$date1$seas3.nc ./FARK/$var1$symbol1$date1$seas3.nc4
+cdo sub $var1$symbol1$date1$seas4.nc4 $dir6/sel$var1$symbol1$date1$seas4.nc ./FARK/$var1$symbol1$date1$seas4.nc4
+cdo timcor $var1$symbol1$date1.nc $dir6/sel$var1$symbol1$date1.nc ./TIMCOR/$var1$symbol1$date1.nc
+cdo timcor $var1$symbol1$date1$seas1.nc4 $dir6/sel$var1$symbol1$date1$seas1.nc ./TIMCOR/$var1$symbol1$date1$seas1.nc4
+cdo timcor $var1$symbol1$date1$seas2.nc4 $dir6/sel$var1$symbol1$date1$seas2.nc ./TIMCOR/$var1$symbol1$date1$seas2.nc4
+cdo timcor $var1$symbol1$date1$seas3.nc4 $dir6/sel$var1$symbol1$date1$seas3.nc ./TIMCOR/$var1$symbol1$date1$seas3.nc4
+cdo timcor $var1$symbol1$date1$seas4.nc4 $dir6/sel$var1$symbol1$date1$seas4.nc ./TIMCOR/$var1$symbol1$date1$seas4.nc4
+cdo timvar $var1$symbol1$date1.nc ./TIMVAR/$var1$symbol1$date1.nc
+cdo timvar $var1$symbol1$date1$seas1.nc4 ./TIMVAR/$var1$symbol1$date1$seas1.nc4
+cdo timvar $var1$symbol1$date1$seas2.nc4 ./TIMVAR/$var1$symbol1$date1$seas2.nc4
+cdo timvar $var1$symbol1$date1$seas3.nc4 ./TIMVAR/$var1$symbol1$date1$seas3.nc4
+cdo timvar $var1$symbol1$date1$seas4.nc4 ./TIMVAR/$var1$symbol1$date1$seas4.nc4
+cdo timsum ./FARK/$var1$symbol1$date1.nc ./FARKSUM/$var1$symbol1$date1.nc
+cdo timsum ./FARK/$var1$symbol1$date1$seas1.nc4 ./FARKSUM/$var1$symbol1$date1$seas1.nc4
+cdo timsum ./FARK/$var1$symbol1$date1$seas2.nc4 ./FARKSUM/$var1$symbol1$date1$seas2.nc4
+cdo timsum ./FARK/$var1$symbol1$date1$seas3.nc4 ./FARKSUM/$var1$symbol1$date1$seas3.nc4
+cdo timsum ./FARK/$var1$symbol1$date1$seas4.nc4 ./FARKSUM/$var1$symbol1$date1$seas4.nc4
+cdo divc,360 ./FARKSUM/$var1$symbol1$date1.nc ./FARKSUMN/$var1$symbol1$date1.nc
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas1.nc4 ./FARKSUMN/$var1$symbol1$date1$seas1.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas2.nc4 ./FARKSUMN/$var1$symbol1$date1$seas2.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas3.nc4 ./FARKSUMN/$var1$symbol1$date1$seas3.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas4.nc4 ./FARKSUMN/$var1$symbol1$date1$seas4.nc4
+cdo mul ./FARKSUM/$var1$symbol1$date1.nc ./FARKSUM/$var1$symbol1$date1.nc ./FARKSUMSQUARE/$var1$symbol1$date1.nc
+cdo mul ./FARKSUM/$var1$symbol1$date1$seas1.nc4 ./FARKSUM/$var1$symbol1$date1$seas1.nc4 ./FARKSUMSQUARE/$var1$symbol1$date1$seas1.nc4
+cdo mul ./FARKSUM/$var1$symbol1$date1$seas2.nc4 ./FARKSUM/$var1$symbol1$date1$seas2.nc4 ./FARKSUMSQUARE/$var1$symbol1$date1$seas2.nc4
+cdo mul ./FARKSUM/$var1$symbol1$date1$seas3.nc4 ./FARKSUM/$var1$symbol1$date1$seas3.nc4 ./FARKSUMSQUARE/$var1$symbol1$date1$seas3.nc4
+cdo mul ./FARKSUM/$var1$symbol1$date1$seas4.nc4 ./FARKSUM/$var1$symbol1$date1$seas4.nc4 ./FARKSUMSQUARE/$var1$symbol1$date1$seas4.nc4
+cdo mul ./FARK/$var1$symbol1$date1.nc ./FARK/$var1$symbol1$date1.nc ./FARKSQUARE/$var1$symbol1$date1.nc
+cdo mul ./FARK/$var1$symbol1$date1$seas1.nc4 ./FARK/$var1$symbol1$date1$seas1.nc4 ./FARKSQUARE/$var1$symbol1$date1$seas1.nc4
+cdo mul ./FARK/$var1$symbol1$date1$seas2.nc4 ./FARK/$var1$symbol1$date1$seas2.nc4 ./FARKSQUARE/$var1$symbol1$date1$seas2.nc4
+cdo mul ./FARK/$var1$symbol1$date1$seas3.nc4 ./FARK/$var1$symbol1$date1$seas3.nc4 ./FARKSQUARE/$var1$symbol1$date1$seas3.nc4
+cdo mul ./FARK/$var1$symbol1$date1$seas4.nc4 ./FARK/$var1$symbol1$date1$seas4.nc4 ./FARKSQUARE/$var1$symbol1$date1$seas4.nc4
+cdo timsum ./FARKSQUARE/$var1$symbol1$date1.nc ./FARKSQUARESUM/$var1$symbol1$date1.nc
+cdo timsum ./FARKSQUARE/$var1$symbol1$date1$seas1.nc4 ./FARKSQUARESUM/$var1$symbol1$date1$seas1.nc4
+cdo timsum ./FARKSQUARE/$var1$symbol1$date1$seas2.nc4 ./FARKSQUARESUM/$var1$symbol1$date1$seas2.nc4
+cdo timsum ./FARKSQUARE/$var1$symbol1$date1$seas3.nc4 ./FARKSQUARESUM/$var1$symbol1$date1$seas3.nc4
+cdo timsum ./FARKSQUARE/$var1$symbol1$date1$seas4.nc4 ./FARKSQUARESUM/$var1$symbol1$date1$seas4.nc4
+cdo divc,360 ./FARKSUM/$var1$symbol1$date1.nc ./FARKSUMN/$var1$symbol1$date1.nc
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas1.nc4 ./FARKSUMN/$var1$symbol1$date1$seas1.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas2.nc4 ./FARKSUMN/$var1$symbol1$date1$seas2.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas3.nc4 ./FARKSUMN/$var1$symbol1$date1$seas3.nc4
+cdo divc,90 ./FARKSUM/$var1$symbol1$date1$seas4.nc4 ./FARKSUMN/$var1$symbol1$date1$seas4.nc4
+cdo divc,360 ./FARKSUMSQUARE/$var1$symbol1$date1.nc ./FARKSUMSQUAREN/$var1$symbol1$date1.nc
+cdo divc,90 ./FARKSUMSQUARE/$var1$symbol1$date1$seas1.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas1.nc4
+cdo divc,90 ./FARKSUMSQUARE/$var1$symbol1$date1$seas2.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas2.nc4
+cdo divc,90 ./FARKSUMSQUARE/$var1$symbol1$date1$seas3.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas3.nc4
+cdo divc,90 ./FARKSUMSQUARE/$var1$symbol1$date1$seas4.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas4.nc4
+cdo sub ./FARKSQUARESUM/$var1$symbol1$date1.nc ./FARKSUMSQUAREN/$var1$symbol1$date1.nc ./ARATTEST1/$var1$symbol1$date1.nc
+cdo sub ./FARKSQUARESUM/$var1$symbol1$date1$seas1.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas1.nc4 ./ARATTEST1/$var1$symbol1$date1$seas1.nc4
+cdo sub ./FARKSQUARESUM/$var1$symbol1$date1$seas2.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas2.nc4 ./ARATTEST1/$var1$symbol1$date1$seas2.nc4
+cdo sub ./FARKSQUARESUM/$var1$symbol1$date1$seas3.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas3.nc4 ./ARATTEST1/$var1$symbol1$date1$seas3.nc4
+cdo sub ./FARKSQUARESUM/$var1$symbol1$date1$seas4.nc4 ./FARKSUMSQUAREN/$var1$symbol1$date1$seas4.nc4 ./ARATTEST1/$var1$symbol1$date1$seas4.nc4
+cdo divc,129240 ./ARATTEST1/$var1$symbol1$date1.nc ./ARATTEST2/$var1$symbol1$date1.nc
+cdo divc,8010 ./ARATTEST1/$var1$symbol1$date1$seas1.nc4 ./ARATTEST2/$var1$symbol1$date1$seas1.nc4
+cdo divc,8010 ./ARATTEST1/$var1$symbol1$date1$seas2.nc4 ./ARATTEST2/$var1$symbol1$date1$seas2.nc4
+cdo divc,8010 ./ARATTEST1/$var1$symbol1$date1$seas3.nc4 ./ARATTEST2/$var1$symbol1$date1$seas3.nc4
+cdo divc,8010 ./ARATTEST1/$var1$symbol1$date1$seas4.nc4 ./ARATTEST2/$var1$symbol1$date1$seas4.nc4
+cdo sqrt ./ARATTEST2/$var1$symbol1$date1.nc ./ARATTEST3/$var1$symbol1$date1.nc
+cdo sqrt ./ARATTEST2/$var1$symbol1$date1$seas1.nc4 ./ARATTEST3/$var1$symbol1$date1$seas1.nc4
+cdo sqrt ./ARATTEST2/$var1$symbol1$date1$seas2.nc4 ./ARATTEST3/$var1$symbol1$date1$seas2.nc4
+cdo sqrt ./ARATTEST2/$var1$symbol1$date1$seas3.nc4 ./ARATTEST3/$var1$symbol1$date1$seas3.nc4
+cdo sqrt ./ARATTEST2/$var1$symbol1$date1$seas4.nc4 ./ARATTEST3/$var1$symbol1$date1$seas4.nc4
+cdo div ./FARKSUMN/$var1$symbol1$date1.nc ./ARATTEST3/$var1$symbol1$date1.nc ./ARATTEST4/$var1$symbol1$date1.nc
+cdo div ./FARKSUMN/$var1$symbol1$date1$seas1.nc4 ./ARATTEST3/$var1$symbol1$date1$seas1.nc4 ./ARATTEST4/$var1$symbol1$date1$seas1.nc4
+cdo div ./FARKSUMN/$var1$symbol1$date1$seas2.nc4 ./ARATTEST3/$var1$symbol1$date1$seas2.nc4 ./ARATTEST4/$var1$symbol1$date1$seas2.nc4
+cdo div ./FARKSUMN/$var1$symbol1$date1$seas3.nc4 ./ARATTEST3/$var1$symbol1$date1$seas3.nc4 ./ARATTEST4/$var1$symbol1$date1$seas3.nc4
+cdo div ./FARKSUMN/$var1$symbol1$date1$seas4.nc4 ./ARATTEST3/$var1$symbol1$date1$seas4.nc4 ./ARATTEST4/$var1$symbol1$date1$seas4.nc4
+cdo abs ./ARATTEST4/$var1$symbol1$date1.nc ./ARATTEST5/$var1$symbol1$date1.nc
+cdo abs ./ARATTEST4/$var1$symbol1$date1$seas1.nc4 ./ARATTEST5/$var1$symbol1$date1$seas1.nc4
+cdo abs ./ARATTEST4/$var1$symbol1$date1$seas2.nc4 ./ARATTEST5/$var1$symbol1$date1$seas2.nc4
+cdo abs ./ARATTEST4/$var1$symbol1$date1$seas3.nc4 ./ARATTEST5/$var1$symbol1$date1$seas3.nc4
+cdo abs ./ARATTEST4/$var1$symbol1$date1$seas4.nc4 ./ARATTEST5/$var1$symbol1$date1$seas4.nc4
+cdo ltc,1.984 ./ARATTEST5/$var1$symbol1$date1.nc ./TTEST/$var1$symbol1$date1.nc
+cdo ltc,1.984 ./ARATTEST5/$var1$symbol1$date1$seas1.nc4 ./TTEST/$var1$symbol1$date1$seas1.nc4
+cdo ltc,1.984 ./ARATTEST5/$var1$symbol1$date1$seas2.nc4 ./TTEST/$var1$symbol1$date1$seas2.nc4
+cdo ltc,1.984 ./ARATTEST5/$var1$symbol1$date1$seas3.nc4 ./TTEST/$var1$symbol1$date1$seas3.nc4
+cdo ltc,1.984 ./ARATTEST5/$var1$symbol1$date1$seas4.nc4 ./TTEST/$var1$symbol1$date1$seas4.nc4
+cdo timstd $var1$symbol1$date1.nc ./STD/$var1$symbol1$date1.nc
+cdo timstd $var1$symbol1$date1$seas1.nc4 ./STD/$var1$symbol1$date1$seas1.nc4
+cdo timstd $var1$symbol1$date1$seas2.nc4 ./STD/$var1$symbol1$date1$seas2.nc4
+cdo timstd $var1$symbol1$date1$seas3.nc4 ./STD/$var1$symbol1$date1$seas3.nc4
+cdo timstd $var1$symbol1$date1$seas4.nc4 ./STD/$var1$symbol1$date1$seas4.nc4
+cdo div ./STD/$var1$symbol1$date1.nc ./$klasor10_1/$var1$symbol1$date1.nc ./ARA/$var1$symbol1$date1.nc
+cdo div ./STD/$var1$symbol1$date1$seas1.nc4 ./$klasor10_1/$var1$symbol1$date1$seas1.nc4 ./ARA/$var1$symbol1$date1$seas1.nc4
+cdo div ./STD/$var1$symbol1$date1$seas2.nc4 ./$klasor10_1/$var1$symbol1$date1$seas2.nc4 ./ARA/$var1$symbol1$date1$seas2.nc4
+cdo div ./STD/$var1$symbol1$date1$seas3.nc4 ./$klasor10_1/$var1$symbol1$date1$seas3.nc4 ./ARA/$var1$symbol1$date1$seas3.nc4
+cdo div ./STD/$var1$symbol1$date1$seas4.nc4 ./$klasor10_1/$var1$symbol1$date1$seas4.nc4 ./ARA/$var1$symbol1$date1$seas4.nc4
+cdo mulc,100 ./ARA/$var1$symbol1$date1.nc ./CV/$var1$symbol1$date1.nc
+cdo mulc,100 ./ARA/$var1$symbol1$date1$seas1.nc4 ./CV/$var1$symbol1$date1$seas1.nc4
+cdo mulc,100 ./ARA/$var1$symbol1$date1$seas2.nc4 ./CV/$var1$symbol1$date1$seas2.nc4
+cdo mulc,100 ./ARA/$var1$symbol1$date1$seas3.nc4 ./CV/$var1$symbol1$date1$seas3.nc4
+cdo mulc,100 ./ARA/$var1$symbol1$date1$seas4.nc4 ./CV/$var1$symbol1$date1$seas4.nc4
+cdo yearmean $var1$symbol1$date1.nc ./YTIMMEAN/$var1$symbol1$date1.nc
+cdo yearmean $var1$symbol1$date1$seas1.nc4 ./YTIMMEAN/$var1$symbol1$date1$seas1.nc4
+cdo yearmean $var1$symbol1$date1$seas2.nc4 ./YTIMMEAN/$var1$symbol1$date1$seas2.nc4
+cdo yearmean $var1$symbol1$date1$seas3.nc4 ./YTIMMEAN/$var1$symbol1$date1$seas3.nc4
+cdo yearmean $var1$symbol1$date1$seas4.nc4 ./YTIMMEAN/$var1$symbol1$date1$seas4.nc4
+cdo timstd ./YTIMMEAN/$var1$symbol1$date1.nc ./YSTD/$var1$symbol1$date1.nc
+cdo timstd ./YTIMMEAN/$var1$symbol1$date1$seas1.nc4 ./YSTD/$var1$symbol1$date1$seas1.nc4
+cdo timstd ./YTIMMEAN/$var1$symbol1$date1$seas2.nc4 ./YSTD/$var1$symbol1$date1$seas2.nc4
+cdo timstd ./YTIMMEAN/$var1$symbol1$date1$seas3.nc4 ./YSTD/$var1$symbol1$date1$seas3.nc4
+cdo timstd ./YTIMMEAN/$var1$symbol1$date1$seas4.nc4 ./YSTD/$var1$symbol1$date1$seas4.nc4
+cdo div ./YSTD/$var1$symbol1$date1.nc ./TIMMEAN/$var1$symbol1$date1.nc ./YARA/$var1$symbol1$date1.nc
+cdo div ./YSTD/$var1$symbol1$date1$seas1.nc4 ./TIMMEAN/$var1$symbol1$date1$seas1.nc4 ./YARA/$var1$symbol1$date1$seas1.nc4
+cdo div ./YSTD/$var1$symbol1$date1$seas2.nc4 ./TIMMEAN//$var1$symbol1$date1$seas2.nc4 ./YARA/$var1$symbol1$date1$seas2.nc4
+cdo div ./YSTD/$var1$symbol1$date1$seas3.nc4 ./TIMMEAN/$var1$symbol1$date1$seas3.nc4 ./YARA/$var1$symbol1$date1$seas3.nc4
+cdo div ./YSTD/$var1$symbol1$date1$seas4.nc4 ./TIMMEAN/$var1$symbol1$date1$seas4.nc4 ./YARA/$var1$symbol1$date1$seas4.nc4
+cdo mulc,100 ./YARA/$var1$symbol1$date1.nc ./YCV/$var1$symbol1$date1.nc
+cdo mulc,100 ./YARA/$var1$symbol1$date1$seas1.nc4 ./YCV/$var1$symbol1$date1$seas1.nc4
+cdo mulc,100 ./YARA/$var1$symbol1$date1$seas2.nc4 ./YCV/$var1$symbol1$date1$seas2.nc4
+cdo mulc,100 ./YARA/$var1$symbol1$date1$seas3.nc4 ./YCV/$var1$symbol1$date1$seas3.nc4
+cdo mulc,100 ./YARA/$var1$symbol1$date1$seas4.nc4 ./YCV/$var1$symbol1$date1$seas4.nc4
+cdo sub ./YTIMMEAN/$var1$symbol1$date1.nc $dir6/YTIMMEAN/sel$var1$symbol1$date1.nc ./YFARK/$var1$symbol1$date1.nc
+cdo sub ./YTIMMEAN/$var1$symbol1$date1$seas1.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas1.nc ./YFARK/$var1$symbol1$date1$seas1.nc4
+cdo sub ./YTIMMEAN/$var1$symbol1$date1$seas2.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas2.nc ./YFARK/$var1$symbol1$date1$seas2.nc4
+cdo sub ./YTIMMEAN/$var1$symbol1$date1$seas3.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas3.nc ./YFARK/$var1$symbol1$date1$seas3.nc4
+cdo sub ./YTIMMEAN/$var1$symbol1$date1$seas4.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas4.nc ./YFARK/$var1$symbol1$date1$seas4.nc4
+cdo timcor ./YTIMMEAN/$var1$symbol1$date1.nc $dir6/YTIMMEAN/sel$var1$symbol1$date1.nc ./YTIMCOR/$var1$symbol1$date1.nc
+cdo timcor ./YTIMMEAN/$var1$symbol1$date1$seas1.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas1.nc ./YTIMCOR/$var1$symbol1$date1$seas1.nc4
+cdo timcor ./YTIMMEAN/$var1$symbol1$date1$seas2.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas2.nc ./YTIMCOR/$var1$symbol1$date1$seas2.nc4
+cdo timcor ./YTIMMEAN/$var1$symbol1$date1$seas3.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas3.nc ./YTIMCOR/$var1$symbol1$date1$seas3.nc4
+cdo timcor ./YTIMMEAN/$var1$symbol1$date1$seas4.nc4 $dir6/YTIMMEAN/sel$var1$symbol1$date1$seas4.nc ./YTIMCOR/$var1$symbol1$date1$seas4.nc4
+cdo timvar ./YTIMMEAN/$var1$symbol1$date1.nc ./YTIMVAR/$var1$symbol1$date1.nc
+cdo timvar ./YTIMMEAN/$var1$symbol1$date1$seas1.nc4 ./YTIMVAR/$var1$symbol1$date1$seas1.nc4
+cdo timvar ./YTIMMEAN/$var1$symbol1$date1$seas2.nc4 ./YTIMVAR/$var1$symbol1$date1$seas2.nc4
+cdo timvar ./YTIMMEAN/$var1$symbol1$date1$seas3.nc4 ./YTIMVAR/$var1$symbol1$date1$seas3.nc4
+cdo timvar ./YTIMMEAN/$var1$symbol1$date1$seas4.nc4 ./YTIMVAR/$var1$symbol1$date1$seas4.nc4
+cdo timsum ./YFARK/$var1$symbol1$date1.nc ./YFARKSUM/$var1$symbol1$date1.nc
+cdo timsum ./YFARK/$var1$symbol1$date1$seas1.nc4 ./YFARKSUM/$var1$symbol1$date1$seas1.nc4
+cdo timsum ./YFARK/$var1$symbol1$date1$seas2.nc4 ./YFARKSUM/$var1$symbol1$date1$seas2.nc4
+cdo timsum ./YFARK/$var1$symbol1$date1$seas3.nc4 ./YFARKSUM/$var1$symbol1$date1$seas3.nc4
+cdo timsum ./YFARK/$var1$symbol1$date1$seas4.nc4 ./YFARKSUM/$var1$symbol1$date1$seas4.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1.nc ./YFARKSUMN/$var1$symbol1$date1.nc
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas1.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas2.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas3.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas4.nc4
+cdo mul ./YFARKSUM/$var1$symbol1$date1.nc ./YFARKSUM/$var1$symbol1$date1.nc ./YFARKSUMSQUARE/$var1$symbol1$date1.nc
+cdo mul ./YFARKSUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas1.nc4
+cdo mul ./YFARKSUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas2.nc4
+cdo mul ./YFARKSUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas3.nc4
+cdo mul ./YFARKSUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas4.nc4
+cdo mul ./YFARK/$var1$symbol1$date1.nc ./YFARK/$var1$symbol1$date1.nc ./YFARKSQUARE/$var1$symbol1$date1.nc
+cdo mul ./YFARK/$var1$symbol1$date1$seas1.nc4 ./YFARK/$var1$symbol1$date1$seas1.nc4 ./YFARKSQUARE/$var1$symbol1$date1$seas1.nc4
+cdo mul ./YFARK/$var1$symbol1$date1$seas2.nc4 ./YFARK/$var1$symbol1$date1$seas2.nc4 ./YFARKSQUARE/$var1$symbol1$date1$seas2.nc4
+cdo mul ./YFARK/$var1$symbol1$date1$seas3.nc4 ./YFARK/$var1$symbol1$date1$seas3.nc4 ./YFARKSQUARE/$var1$symbol1$date1$seas3.nc4
+cdo mul ./YFARK/$var1$symbol1$date1$seas4.nc4 ./YFARK/$var1$symbol1$date1$seas4.nc4 ./YFARKSQUARE/$var1$symbol1$date1$seas4.nc4
+cdo timsum ./YFARKSQUARE/$var1$symbol1$date1.nc ./YFARKSQUARESUM/$var1$symbol1$date1.nc
+cdo timsum ./YFARKSQUARE/$var1$symbol1$date1$seas1.nc4 ./YFARKSQUARESUM/$var1$symbol1$date1$seas1.nc4
+cdo timsum ./YFARKSQUARE/$var1$symbol1$date1$seas2.nc4 ./YFARKSQUARESUM/$var1$symbol1$date1$seas2.nc4
+cdo timsum ./YFARKSQUARE/$var1$symbol1$date1$seas3.nc4 ./YFARKSQUARESUM/$var1$symbol1$date1$seas3.nc4
+cdo timsum ./YFARKSQUARE/$var1$symbol1$date1$seas4.nc4 ./YFARKSQUARESUM/$var1$symbol1$date1$seas4.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1.nc ./YFARKSUMN/$var1$symbol1$date1.nc
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas1.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas2.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas3.nc4
+cdo divc,30 ./YFARKSUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSUMN/$var1$symbol1$date1$seas4.nc4
+cdo divc,30 ./YFARKSUMSQUARE/$var1$symbol1$date1.nc ./YFARKSUMSQUAREN/$var1$symbol1$date1.nc
+cdo divc,30 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas1.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas1.nc4
+cdo divc,30 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas2.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas2.nc4
+cdo divc,30 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas3.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas3.nc4
+cdo divc,30 ./YFARKSUMSQUARE/$var1$symbol1$date1$seas4.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas4.nc4
+cdo sub ./YFARKSQUARESUM/$var1$symbol1$date1.nc ./YFARKSUMSQUAREN/$var1$symbol1$date1.nc ./YARATTEST1/$var1$symbol1$date1.nc
+cdo sub ./YFARKSQUARESUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas1.nc4 ./YARATTEST1/$var1$symbol1$date1$seas1.nc4
+cdo sub ./YFARKSQUARESUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas2.nc4 ./YARATTEST1/$var1$symbol1$date1$seas2.nc4
+cdo sub ./YFARKSQUARESUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas3.nc4 ./YARATTEST1/$var1$symbol1$date1$seas3.nc4
+cdo sub ./YFARKSQUARESUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSUMSQUAREN/$var1$symbol1$date1$seas4.nc4 ./YARATTEST1/$var1$symbol1$date1$seas4.nc4
+cdo divc,870 ./YARATTEST1/$var1$symbol1$date1.nc ./YARATTEST2/$var1$symbol1$date1.nc
+cdo divc,870 ./YARATTEST1/$var1$symbol1$date1$seas1.nc4 ./YARATTEST2/$var1$symbol1$date1$seas1.nc4
+cdo divc,870 ./YARATTEST1/$var1$symbol1$date1$seas2.nc4 ./YARATTEST2/$var1$symbol1$date1$seas2.nc4
+cdo divc,870 ./YARATTEST1/$var1$symbol1$date1$seas3.nc4 ./YARATTEST2/$var1$symbol1$date1$seas3.nc4
+cdo divc,870 ./YARATTEST1/$var1$symbol1$date1$seas4.nc4 ./YARATTEST2/$var1$symbol1$date1$seas4.nc4
+cdo sqrt ./YARATTEST2/$var1$symbol1$date1.nc ./YARATTEST3/$var1$symbol1$date1.nc
+cdo sqrt ./YARATTEST2/$var1$symbol1$date1$seas1.nc4 ./YARATTEST3/$var1$symbol1$date1$seas1.nc4
+cdo sqrt ./YARATTEST2/$var1$symbol1$date1$seas2.nc4 ./YARATTEST3/$var1$symbol1$date1$seas2.nc4
+cdo sqrt ./YARATTEST2/$var1$symbol1$date1$seas3.nc4 ./YARATTEST3/$var1$symbol1$date1$seas3.nc4
+cdo sqrt ./YARATTEST2/$var1$symbol1$date1$seas4.nc4 ./YARATTEST3/$var1$symbol1$date1$seas4.nc4
+cdo div ./YFARKSUMN/$var1$symbol1$date1.nc ./YARATTEST3/$var1$symbol1$date1.nc ./YARATTEST4/$var1$symbol1$date1.nc
+cdo div ./YFARKSUMN/$var1$symbol1$date1$seas1.nc4 ./YARATTEST3/$var1$symbol1$date1$seas1.nc4 ./YARATTEST4/$var1$symbol1$date1$seas1.nc4
+cdo div ./YFARKSUMN/$var1$symbol1$date1$seas2.nc4 ./YARATTEST3/$var1$symbol1$date1$seas2.nc4 ./YARATTEST4/$var1$symbol1$date1$seas2.nc4
+cdo div ./YFARKSUMN/$var1$symbol1$date1$seas3.nc4 ./YARATTEST3/$var1$symbol1$date1$seas3.nc4 ./YARATTEST4/$var1$symbol1$date1$seas3.nc4
+cdo div ./YFARKSUMN/$var1$symbol1$date1$seas4.nc4 ./YARATTEST3/$var1$symbol1$date1$seas4.nc4 ./YARATTEST4/$var1$symbol1$date1$seas4.nc4
+cdo abs ./YARATTEST4/$var1$symbol1$date1.nc ./YARATTEST5/$var1$symbol1$date1.nc
+cdo abs ./YARATTEST4/$var1$symbol1$date1$seas1.nc4 ./YARATTEST5/$var1$symbol1$date1$seas1.nc4
+cdo abs ./YARATTEST4/$var1$symbol1$date1$seas2.nc4 ./YARATTEST5/$var1$symbol1$date1$seas2.nc4
+cdo abs ./YARATTEST4/$var1$symbol1$date1$seas3.nc4 ./YARATTEST5/$var1$symbol1$date1$seas3.nc4
+cdo abs ./YARATTEST4/$var1$symbol1$date1$seas4.nc4 ./YARATTEST5/$var1$symbol1$date1$seas4.nc4
+cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1.nc ./YTTEST/$var1$symbol1$date1.nc
+cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas1.nc4 ./YTTEST/$var1$symbol1$date1$seas1.nc4
+cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas2.nc4 ./YTTEST/$var1$symbol1$date1$seas2.nc4
+cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas3.nc4 ./YTTEST/$var1$symbol1$date1$seas3.nc4
+cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas4.nc4 ./YTTEST/$var1$symbol1$date1$seas4.nc4
+cdo divc,30 ./YFARKSQUARESUM/$var1$symbol1$date1.nc ./YFARKSQUARESUMN/$var1$symbol1$date1.nc
+cdo divc,30 ./YFARKSQUARESUM/$var1$symbol1$date1$seas1.nc4 ./YFARKSQUARESUMN/$var1$symbol1$date1$seas1.nc4
+cdo divc,30 ./YFARKSQUARESUM/$var1$symbol1$date1$seas2.nc4 ./YFARKSQUARESUMN/$var1$symbol1$date1$seas2.nc4
+cdo divc,30 ./YFARKSQUARESUM/$var1$symbol1$date1$seas3.nc4 ./YFARKSQUARESUMN/$var1$symbol1$date1$seas3.nc4
+cdo divc,30 ./YFARKSQUARESUM/$var1$symbol1$date1$seas4.nc4 ./YFARKSQUARESUMN/$var1$symbol1$date1$seas4.nc4
+cdo sqrt ./YFARKSQUARESUMN/$var1$symbol1$date1.nc ./YRMSE/$var1$symbol1$date1.nc
+cdo sqrt ./YFARKSQUARESUMN/$var1$symbol1$date1$seas1.nc4 ./YRMSE/$var1$symbol1$date1$seas1.nc4
+cdo sqrt ./YFARKSQUARESUMN/$var1$symbol1$date1$seas2.nc4 ./YRMSE/$var1$symbol1$date1$seas2.nc4
+cdo sqrt ./YFARKSQUARESUMN/$var1$symbol1$date1$seas3.nc4 ./YRMSE/$var1$symbol1$date1$seas3.nc4
+cdo sqrt ./YFARKSQUARESUMN/$var1$symbol1$date1$seas4.nc4 ./YRMSE/$var1$symbol1$date1$seas4.nc4
+#  cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1.nc ./YTTEST/ANNUAL/lt$line30.nc
+#  cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas1.nc4 ./YTTEST/DJF/lt$line30.nc
+#  cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas2.nc4 ./YTTEST/MAM/lt$line30.nc
+#  cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas3.nc4 ./YTTEST/JJA/lt$line30.nc
+#  cdo ltc,2.042 ./YARATTEST5/$var1$symbol1$date1$seas4.nc4 ./YTTEST/SON/lt$line30.nc
+#  cdo enssum ./YTTEST/DJF/lt$line30.nc ./YTTEST/MAM/lt$line30.nc ./YTTEST/JJA/lt$line30.nc ./YTTEST/SON/lt$line30.nc $dir2/$klasor5_5/$klasor6/SUM/sumlt$line30.nc
+cd ../../
+done
+echo " CODE_PREP BITTI"
+cd $dir4
+mkdir $klasor5_1 $klasor5_2 $klasor5_3 $klasor5_4 $klasor5_5 $klasor5_6
+cd $klasor5_1
+#buraya digerleri yedirilebilir
+cdo enssum ../*/$klasor9/$klasor10_3/$var1$symbol1$date1$seas1.nc j$name1$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum ../*/$klasor9/$klasor10_3/$var1$symbol1$date1$seas2.nc j$name1$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum ../*/$klasor9/$klasor10_3/$var1$symbol1$date1$seas3.nc j$name1$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum ../*/$klasor9/$klasor10_3/$var1$symbol1$date1$seas4.nc j$name1$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum ../*/$klasor9/$klasor10_3/$var1$symbol1$date1.nc j$name1$symbol1$var1$symbol1$date1.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas1.nc $name1$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas2.nc $name1$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas3.nc $name1$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas4.nc $name1$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1.nc $name1$symbol1$var1$symbol1$date1.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas1.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas2.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas3.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas4.nc
+rm j$name1$symbol1$var1$symbol1$date1.nc
+mkdir $seas1 $seas2 $seas4 $seas3 $seas5
+cd ..
+for line in $(cat list3)
+do
+cdo lt ./$line/$klasor9/$klasor10_3/$var1$symbol1$date1$seas1.nc ./$klasor5_1/$name1$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_1/$seas1/lt$line.nc
+cdo lt ./$line/$klasor9/$klasor10_3/$var1$symbol1$date1$seas2.nc ./$klasor5_1/$name1$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_1/$seas2/lt$line.nc
+cdo lt ./$line/$klasor9/$klasor10_3/$var1$symbol1$date1$seas3.nc ./$klasor5_1/$name1$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_1/$seas3/lt$line.nc
+cdo lt ./$line/$klasor9/$klasor10_3/$var1$symbol1$date1$seas4.nc ./$klasor5_1/$name1$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_1/$seas4/lt$line.nc
+cdo lt ./$line/$klasor9/$klasor10_3/$var1$symbol1$date1.nc ./$klasor5_1/$name1$symbol1$var1$symbol1$date1.nc ./$klasor5_1/$seas5/lt$line.nc
+done
+cd $klasor5_2
+cdo enssum $dir4/*/$klasor9/YRMSE/$var1$symbol1$date1$seas1.nc4 j$name1$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum $dir4/*/$klasor9/YRMSE/$var1$symbol1$date1$seas2.nc4 j$name1$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum $dir4/*/$klasor9/YRMSE/$var1$symbol1$date1$seas3.nc4 j$name1$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum $dir4/*/$klasor9/YRMSE/$var1$symbol1$date1$seas4.nc4 j$name1$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum $dir4/*/$klasor9/YRMSE/$var1$symbol1$date1.nc j$name1$symbol1$var1$symbol1$date1.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas1.nc $name1$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas2.nc $name1$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas3.nc $name1$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1$seas4.nc $name1$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j j$name1$symbol1$var1$symbol1$date1.nc $name1$symbol1$var1$symbol1$date1.nc
+rm j$name1$symbol1$var1$symbol1$date1.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas1.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas2.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas3.nc
+rm j$name1$symbol1$var1$symbol1$date1$seas4.nc
+mkdir $seas1 $seas2 $seas4 $seas3 $seas5
+cd ..
+for line in $(cat list3)
+do
+cdo lt ./$line/$klasor9/YRMSE/$var1$symbol1$date1$seas1.nc4 ./$klasor5_2/$name1$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_2/$seas1/lt$line.nc
+cdo lt ./$line/$klasor9/YRMSE/$var1$symbol1$date1$seas2.nc4 ./$klasor5_2/$name1$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_2/$seas2/lt$line.nc
+cdo lt ./$line/$klasor9/YRMSE/$var1$symbol1$date1$seas3.nc4 ./$klasor5_2/$name1$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_2/$seas3/lt$line.nc
+cdo lt ./$line/$klasor9/YRMSE/$var1$symbol1$date1$seas4.nc4 ./$klasor5_2/$name1$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_2/$seas4/lt$line.nc
+cdo lt ./$line/$klasor9/YRMSE/$var1$symbol1$date1.nc ./$klasor5_2/$name1$symbol1$var1$symbol1$date1.nc ./$klasor5_2/$seas5/lt$line.nc
+done
+#mkdir $klasor5_3 $klasor5_4
+#echo $klasor5_3 $klasor5_1TIMECOR >listmet
+#for line71 in $(cat listmet)
+#cd $line71
+cd $klasor5_3
+cdo enssum ../$var2$symbol1*/$klasor9/TTEST/$var1$symbol1$date1$seas1.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas1.nc ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TTEST/$var1$symbol1$date1$seas2.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas2.nc ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TTEST/$var1$symbol1$date1$seas3.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas3.nc ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TTEST/$var1$symbol1$date1$seas4.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas4.nc ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TTEST/$var1$symbol1$date1.nc ENSSUM$symbol1$var1$symbol1$date1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1.nc ENSMEAN$symbol1$var1$symbol1$date1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1.nc
+#EWMEMD den her bir modelin kucuk olanları bulunup mevsimlere gore DJF MAM JJA SON un icine atılıyor.
+mkdir DJF MAM SON JJA ANNUAL
+cd ..
+for line in $(cat list3)
+do
+cdo gt ./$line/$klasor9/TTEST/$var1$symbol1$date1$seas1.nc4 ./$klasor5_3/ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_3/DJF/lt$line.nc
+cdo gt ./$line/$klasor9/TTEST/$var1$symbol1$date1$seas2.nc4 ./$klasor5_3/ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_3/MAM/lt$line.nc
+cdo gt ./$line/$klasor9/TTEST/$var1$symbol1$date1$seas3.nc4 ./$klasor5_3/ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_3/JJA/lt$line.nc
+cdo gt ./$line/$klasor9/TTEST/$var1$symbol1$date1$seas4.nc4 ./$klasor5_3/ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_3/SON/lt$line.nc
+cdo gt ./$line/$klasor9/TTEST/$var1$symbol1$date1.nc ./$klasor5_3/ENSMEAN$symbol1$var1$symbol1$date1.nc ./$klasor5_3/ANNUAL/lt$line.nc
+done
+cd $klasor5_4
+cdo enssum ../$var2$symbol1*/$klasor9/TIMCOR/$var1$symbol1$date1$seas1.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas1.nc ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TIMCOR/$var1$symbol1$date1$seas2.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas2.nc ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TIMCOR/$var1$symbol1$date1$seas3.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas3.nc ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TIMCOR/$var1$symbol1$date1$seas4.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas4.nc ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum ../$var2$symbol1*/$klasor9/TIMCOR/$var1$symbol1$date1.nc ENSSUM$symbol1$var1$symbol1$date1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1.nc ENSMEAN$symbol1$var1$symbol1$date1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1.nc
+#EWMEMD den her bir modelin kucuk olanları bulunup mevsimlere gore DJF MAM JJA SON un icine atılıyor.
+mkdir DJF MAM SON JJA ANNUAL
+cd ..
+for line in $(cat list3)
+do
+cdo gt ./$line/$klasor9/TIMCOR/$var1$symbol1$date1$seas1.nc4 ./$klasor5_4/ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_4/DJF/lt$line.nc
+cdo gt ./$line/$klasor9/TIMCOR/$var1$symbol1$date1$seas2.nc4 ./$klasor5_4/ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_4/MAM/lt$line.nc
+cdo gt ./$line/$klasor9/TIMCOR/$var1$symbol1$date1$seas3.nc4 ./$klasor5_4/ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_4/JJA/lt$line.nc
+cdo gt ./$line/$klasor9/TIMCOR/$var1$symbol1$date1$seas4.nc4 ./$klasor5_4/ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_4/SON/lt$line.nc
+cdo gt ./$line/$klasor9/TIMCOR/$var1$symbol1$date1.nc ./$klasor5_4/ENSMEAN$symbol1$var1$symbol1$date1.nc ./$klasor5_4/ANNUAL/lt$line.nc
+done
+#mkdir $klasor5_5 $klasor5_6
+#echo $klasor5_3 $klasor5_1TIMECOR >listmet
+#for line71 in $(cat listmet)
+#cd $line71
+cd $klasor5_5
+cdo enssum ../$var2$symbol1*/$klasor9/YTTEST/$var1$symbol1$date1$seas1.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas1.nc ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTTEST/$var1$symbol1$date1$seas2.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas2.nc ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTTEST/$var1$symbol1$date1$seas3.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas3.nc ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTTEST/$var1$symbol1$date1$seas4.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas4.nc ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTTEST/$var1$symbol1$date1.nc ENSSUM$symbol1$var1$symbol1$date1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1.nc ENSMEAN$symbol1$var1$symbol1$date1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1.nc
+#EWMEMD den her bir modelin kucuk olanları bulunup mevsimlere gore DJF MAM JJA SON un icine atılıyor.
+mkdir DJF MAM SON JJA ANNUAL
+cd ..
+for line in $(cat list3)
+do
+cdo gt ./$line/$klasor9/YTTEST/$var1$symbol1$date1$seas1.nc4 ./$klasor5_5/ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_5/DJF/lt$line.nc
+cdo gt ./$line/$klasor9/YTTEST/$var1$symbol1$date1$seas2.nc4 ./$klasor5_5/ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_5/MAM/lt$line.nc
+cdo gt ./$line/$klasor9/YTTEST/$var1$symbol1$date1$seas3.nc4 ./$klasor5_5/ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_5/JJA/lt$line.nc
+cdo gt ./$line/$klasor9/YTTEST/$var1$symbol1$date1$seas4.nc4 ./$klasor5_5/ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_5/SON/lt$line.nc
+cdo gt ./$line/$klasor9/YTTEST/$var1$symbol1$date1.nc ./$klasor5_5/ENSMEAN$symbol1$var1$symbol1$date1.nc ./$klasor5_5/ANNUAL/lt$line.nc
+done
+cd $klasor5_6
+cdo enssum ../$var2$symbol1*/$klasor9/YTIMCOR/$var1$symbol1$date1$seas1.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas1.nc ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas1.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTIMCOR/$var1$symbol1$date1$seas2.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas2.nc ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas2.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTIMCOR/$var1$symbol1$date1$seas3.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas3.nc ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas3.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTIMCOR/$var1$symbol1$date1$seas4.nc4 ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1$seas4.nc ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc
+rm ENSSUM$symbol1$var1$symbol1$date1$seas4.nc
+cdo enssum ../$var2$symbol1*/$klasor9/YTIMCOR/$var1$symbol1$date1.nc ENSSUM$symbol1$var1$symbol1$date1.nc
+cdo divc,$j ENSSUM$symbol1$var1$symbol1$date1.nc ENSMEAN$symbol1$var1$symbol1$date1.nc
+rm ENSSUM$symbol1$var1$symbol1$date1.nc
+#EWMEMD den her bir modelin kucuk olanları bulunup mevsimlere gore DJF MAM JJA SON un icine atılıyor.
+mkdir DJF MAM SON JJA ANNUAL
+cd ..
+for line in $(cat list3)
+do
+cdo gt ./$line/$klasor9/YTIMCOR/$var1$symbol1$date1$seas1.nc4 ./$klasor5_6/ENSMEAN$symbol1$var1$symbol1$date1$seas1.nc ./$klasor5_6/DJF/lt$line.nc
+cdo gt ./$line/$klasor9/YTIMCOR/$var1$symbol1$date1$seas2.nc4 ./$klasor5_6/ENSMEAN$symbol1$var1$symbol1$date1$seas2.nc ./$klasor5_6/MAM/lt$line.nc
+cdo gt ./$line/$klasor9/YTIMCOR/$var1$symbol1$date1$seas3.nc4 ./$klasor5_6/ENSMEAN$symbol1$var1$symbol1$date1$seas3.nc ./$klasor5_6/JJA/lt$line.nc
+cdo gt ./$line/$klasor9/YTIMCOR/$var1$symbol1$date1$seas4.nc4 ./$klasor5_6/ENSMEAN$symbol1$var1$symbol1$date1$seas4.nc ./$klasor5_6/SON/lt$line.nc
+cdo gt ./$line/$klasor9/YTIMCOR/$var1$symbol1$date1.nc ./$klasor5_6/ENSMEAN$symbol1$var1$symbol1$date1.nc ./$klasor5_6/ANNUAL/lt$line.nc
+done
+mkdir -p $dir30/$klasor6/$klasor7/MODELS $dir30/$klasor6/SUM
+mkdir -p $dir31/$klasor6/$klasor7/MODELS $dir31/$klasor6/SUM
+mkdir -p $dir32/$klasor6/$klasor7/MODELS $dir32/$klasor6/SUM
+mkdir -p $dir33/$klasor6/$klasor7/MODELS $dir33/$klasor6/SUM
+mkdir -p $dir34/$klasor6/$klasor7/MODELS $dir34/$klasor6/SUM
+mkdir -p $dir35/$klasor6/$klasor7/MODELS $dir35/$klasor6/SUM
+for inte3 in {30..35..1}
+#1
+do
+if((inte3==30));then
+cd $dir30
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir30/$seas1/lt$line.nc $dir30/$seas2/lt$line.nc $dir30/$seas3/lt$line.nc $dir30/$seas4/lt$line.nc $dir30/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir30/$klasor6/
+cd $dir30/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULT/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/$klasor12
+elif((inte3==31));then
+cd $dir31
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir31/$seas1/lt$line.nc $dir31/$seas2/lt$line.nc $dir31/$seas3/lt$line.nc $dir31/$seas4/lt$line.nc $dir31/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir31/$klasor6/
+cd $dir31/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTRMSE/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7/$klasor12
+elif((inte3==32));then
+cd $dir32
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir32/$seas1/lt$line.nc $dir32/$seas2/lt$line.nc $dir32/$seas3/lt$line.nc $dir32/$seas4/lt$line.nc $dir32/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir32/$klasor6/
+cd $dir32/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTTEST/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7/$klasor12
+elif((inte3==33));then
+cd $dir33
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir33/$seas1/lt$line.nc $dir33/$seas2/lt$line.nc $dir33/$seas3/lt$line.nc $dir33/$seas4/lt$line.nc $dir33/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir33/$klasor6/
+cd $dir33/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTIMCOR/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7/$klasor12
+elif((inte3==34));then
+cd $dir34
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir34/$seas1/lt$line.nc $dir34/$seas2/lt$line.nc $dir34/$seas3/lt$line.nc $dir34/$seas4/lt$line.nc $dir34/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir34/$klasor6/
+cd $dir34/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTTEST/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7/$klasor12
+elif((inte3==35));then
+cd $dir35
+#mkdir $klasor6
+cd $klasor6
+#mkdir $klasor11
+cd $dir4
+for line in $(cat list3)
+do
+cdo enssum $dir35/$seas1/lt$line.nc $dir35/$seas2/lt$line.nc $dir35/$seas3/lt$line.nc $dir35/$seas4/lt$line.nc $dir35/$klasor6/$klasor11/$klasor11lt$line.nc
+done
+#mkdir $dir35/$klasor6/
+cd $dir35/$klasor6/
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7
+dir5=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTIMCOR/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7/MODELS
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7/$klasor12
+fi
+# METHOD un altında $klasor6 klasoru olusturuldu. Altında $klasor11 olusturuldu. 4 mevsimin butun degerleri bunun altında olusturuldu. 4 e ne kadar yakınsa o kadar iyidir.
+#cd ./$klasor6
+cd $klasor7
+#Bu kloasorun icinde basarılı modellerle, basarısız odeller birinci yontemle sınanacaktır. AAE den kucuk hatalara sahip modelleri "1"le, buyukleri "0" la göstermiştir.Her mevsim icin bu degerler toplanmıstı. "4" e yakın olanlar basarılı, uzak olanlar basarısız olarak tanımlanmıstı. Sİmdi bu toplamların ortalaması incelenecek. Ortalamadan kucuk olanlar basarısız, buyuk olanlar basarılı olarak tanımlanacak
+cdo enssum ../$klasor11/$klasor11lt*.nc ./sumlimit_select.nc
+cdo divc,$j sumlimit_select.nc limit_select.nc
+rm sumlimit_select.nc
+#limit_select.nc dosyasına "TRMAEElerin" ortalaması hesaplanmış olacak. Bu değerden büyükler "1"le küçükler "0"la gösterilecek.
+#mkdir $klasor12
+#Bu klasorun icinde TRMAEElerin ortalamasından büyükler "1"le küçükler "0"la gösterilecek sekilde 26 model SONUCu var.(Her bir gridde)
+cd ../$klasor11/
+ls $klasor11lt*.nc >list
+for line in $(cat list)
+do
+cdo gt $line ../$klasor7/limit_select.nc ../$klasor7/$klasor12/lim$line
+done
+#$klasor12 klasorundeki 26 modelin alansal ortalamaları alındığında 0 ile 1 arasında değerler çıkacak. Bu değeri 100 le çarptığımızda, modelin grid noktalarının %kacı basarılı olduğunu bulmuş olacağız (SONUC_1.txt)
+cd ../$klasor7/$klasor12
+cp $dir2/SONUC*.R .
+ls lim*.nc >list2
+for line2 in $(cat list2)
+do
+cdo infov $line2 >a$line2.txt
+sed 1d a$line2.txt >a2$line2.txt
+awk {'print $10'} a2$line2.txt >SONUC$line2.txt
+done
+#rm alim*.txt
+#rm a2lim*.txt
+cat SONUC*.nc.txt >result
+ls SONUC*.nc.txt >$klasor12.txt
+paste $klasor12.txt result >SONUC_1.txt
+cp $dir2/SONUC*.R .
+# SONUC_1.R herbir modelin basarılı olan gridlerin yuzdelerinin alansal ortalaması alındıktan $seas4ra olusan degerleri okuyup, her bir modelin yuzde degerinin ortalamasını hesaplıyor. Tum modellerin ortalama yuzde degeerinden buyuk olanları $klasor14, dusuk olanları $klasor13 olarak yazdırıyor.($klasor14.txt)
+Rscript <(cat SONUC_1.R) >varr1.txt
+cp varr1.txt $klasor14.txt
+# SONUC_2.R herbir modelin basarılı olan gridlerin yuzdelerinin alansal ortalaması alındıktan $seas4ra olusan degerleri okuyup, her bir modelin yuzde degerinin ortalamasını hesaplıyor. Tum modellerin ortalama yuzde degeri ile standart sapmasının toplamından buyuk olanları $klasor16, dusuk olanları $klasor15 olarak yazdırıyor.($klasor16.txt)
+Rscript <(cat SONUC_2.R) >varr2.txt
+cp varr2.txt $klasor16.txt
+#Basarılı olan modelleri ve basarı yuzdelerini ayrı yazdırıyor
+Rscript <(cat SONUC_3.R) >varr3.txt
+cp varr3.txt COEF_$klasor14.txt
+Rscript <(cat SONUC_4.R) >varr4.txt
+cp varr4.txt COEF_$klasor16.txt
+#Modelleri ayrı yazdırıyor
+Rscript <(cat SONUC_5.R) >varr5.txt
+cp varr5.txt COEF_$klasor14$symbol2.txt
+Rscript <(cat SONUC_6.R) >varr6.txt
+cp varr6.txt COEF_$klasor16$symbol2.txt
+Rscript <(cat SONUC_7.R) >varr7.txt
+cp varr7.txt li$klasor13$symbol2.txt
+Rscript <(cat SONUC_8.R) >varr8.txt
+cp varr8.txt li$klasor15$symbol2.txt
+#Modellerin isimlerini (.nc.txt siz halini) yazdırıyor. ayrı yazdırıyor
+echo "$(cat COEF_$klasor14$symbol2.txt)" | awk -F'SONUClim' '{print $NF}' >COEF_$klasor14$symbol2.txt_v1
+echo "$(cat COEF_$klasor16$symbol2.txt)" | awk -F'SONUClim' '{print $NF}' >COEF_$klasor16$symbol2.txt_v1
+rev COEF_$klasor14$symbol2.txt_v1 >COEF_$klasor14$symbol2.txt_v2
+rev COEF_$klasor16$symbol2.txt_v1 >COEF_$klasor16$symbol2.txt_v2
+echo "$(cat COEF_$klasor14$symbol2.txt_v2)" | awk -F'txt.cn.' '{print $NF}' >COEF_$klasor14$symbol2.txt_v3
+echo "$(cat COEF_$klasor16$symbol2.txt_v2)" | awk -F'txt.cn.' '{print $NF}' >COEF_$klasor16$symbol2.txt_v3
+rev COEF_$klasor14$symbol2.txt_v3 >COEF_$klasor14$symbol2.txt_v4
+rev COEF_$klasor16$symbol2.txt_v3 >COEF_$klasor16$symbol2.txt_v4
+echo "$(cat li$klasor13$symbol2.txt)" | awk -F'SONUClim' '{print $NF}' >li$klasor13$symbol2.txt_v1
+rev li$klasor13$symbol2.txt_v1 >li$klasor13$symbol2.txt_v2
+echo "$(cat li$klasor13$symbol2.txt_v2)" | awk -F'txt.cn.' '{print $NF}' >li$klasor13$symbol2.txt_v3
+rev li$klasor13$symbol2.txt_v3 >li$klasor13$symbol2.txt_v4
+echo "$(cat li$klasor15$symbol2.txt)" | awk -F'SONUClim' '{print $NF}' >li$klasor15$symbol2.txt_v1
+rev li$klasor15$symbol2.txt_v1 >li$klasor15$symbol2.txt_v2
+echo "$(cat li$klasor15$symbol2.txt_v2)" | awk -F'txt.cn.' '{print $NF}' >li$klasor15$symbol2.txt_v3
+rev li$klasor15$symbol2.txt_v3 >li$klasor15$symbol2.txt_v4
+#Modellerin basarılı olanlarını bu klasorlere yazdırıyor.
+mkdir $test1 $test2 $test3 $test4 $test5 $test6 $test7 $test8 $test9 $test10
+#$test9 de basarı yuzdelerinin ortalamasından buyuk olanlar +1 le kucuk olanlar -1 le gösteriliyor
+cd $test9
+mkdir $klasor13 $klasor14
+cd ..
+cd $test10
+mkdir $klasor13 $klasor14
+cd ..
+cd $dir1/$klasor12
+for line4 in $(cat li$klasor15$symbol2.txt_v4)
+do
+cd $dir2/$line4/$klasor9/$klasor10_1
+ls *.nc* >list5
+for line5 in $(cat list5)
+do
+cdo infov $line5 >${dir1}/${klasor12}/${test10}/${klasor13}/a$line4$line5.txt
+sed 1d $dir1/$klasor12/$test10/$klasor13/a$line4$line5.txt >${dir1}/${klasor12}/${test10}/${klasor13}/a2$line4$line5.txt
+awk {'print $10'} $dir1/$klasor12/$test10/$klasor13/a2$line4$line5.txt >${dir1}/${klasor12}/${test10}/${klasor13}/SONUC$line4$line5.txt
+done
+cd $dir1
+done
+cd $dir1/$klasor12/$test10/$klasor13
+rm a*.txt
+cp ../../li$klasor15$symbol2.txt_v4 .
+for line6 in $(cat li$klasor15$symbol2.txt_v4)
+do
+paste SONUC$line6*$seas1.nc4.txt SONUC$line6*$seas2.nc4.txt SONUC$line6*$seas3.nc4.txt SONUC$line6*$seas4.nc4.txt >$line6.txt
+done
+rm SONUC*.txt
+cd $dir1/$klasor12
+for line4 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+cd $dir2/$line4/$klasor9/$klasor10_1
+ls *.nc* >list5
+#$test10 de basarı yuzdelerinin ortalamasına bir standart sapma eklenmis halinden buyuk olanlar +1 le kucuk olanlar -1 le gösteriliyor
+for line5 in $(cat list5)
+do
+cdo infov $line5 >${dir1}/${klasor12}/${test10}/${klasor14}/a$line4$line5.txt
+sed 1d $dir1/$klasor12/$test10/$klasor14/a$line4$line5.txt >${dir1}/${klasor12}/${test10}/${klasor14}/a2$line4$line5.txt
+awk {'print $10'} $dir1/$klasor12/$test10/$klasor14/a2$line4$line5.txt >${dir1}/${klasor12}/${test10}/${klasor14}/SONUC$line4$line5.txt
+done
+cd $dir1
+done
+cd $dir1/$klasor12/$test10/$klasor14
+#rm a*.txt
+cp ../../COEF_$klasor16$symbol2.txt_v4 .
+for line6 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+paste SONUC$line6*$seas1.nc4.txt SONUC$line6*$seas2.nc4.txt SONUC$line6*$seas3.nc4.txt SONUC$line6*$seas4.nc4.txt >$line6.txt
+done
+rm SONUC*.txt
+cd $dir1/$klasor12/$test10
+#$klasor8 un altında percentile ları her mevsim icin hesaplıyor. Daha $seas4ra 1 5 95 99 olanlara -1 (TRAIN de), 32 45 50 55 68 lara +1 değeri veriyor
+mkdir $klasor8
+mkdir -p $dir1/$klasor12/$test10/
+cp $dir6/NEGATIF.txt $dir1/$klasor12/$test10/
+cp $dir6/POZTIF.txt $dir1/$klasor12/$test10/
+cp $dir6/HEPSI.txt $dir1/$klasor12/$test10/
+cd $dir1/$klasor12/$test10/
+mkdir TRAIN
+mv *.txt ./TRAIN/
+cd $klasor13
+cat $var2*txt >$klasor13.txt
+cd ../$klasor14
+cat $var2*txt >$klasor14.txt
+cd ..
+cp ../SONUC_9.R .
+Rscript <(cat SONUC_9.R)
+cp ../COEF_$klasor16.txt .
+awk {'print "-1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_negatif.txt >train_negatif.txt
+awk {'print "+1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_pozitif.txt >train_pozitif.txt
+awk {'print "-1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_unsucess.txt >train_unsucess.txt
+awk {'print "+1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_sucesss.txt >train_sucess.txt
+cat train_negatif.txt train_pozitif.txt >TRAIN.txt
+cat train_unsucess.txt train_sucess.txt >TEST.txt
+$dir3/./svm_learn TRAIN.txt MODEL.txt
+$dir3/./svm_classify TEST.txt MODEL.txt RESULT_SVM.txt >SONUC_run.txt
+awk {'print $2'} COEF_$klasor16.txt >COEF_$klasor16_final
+cp $dir1/$klasor12/COEF_$klasor16$symbol2.txt_v4 .
+paste COEF_$klasor16$symbol2.txt_v4 COEF_$klasor16_final >test_v1
+# TOPLAMI 4 e en yakın olan modellerin en iyi oldugu durumda yuzde kacının gosterildigi basarı yuzdelerinin ortalamasından buyuk olanların katsayılarıyla carpılıp agırlıklı ortalaması $test1 e yazılıyordu. Agırlıklı ortalama degilde bu modellerin equally weighted averageları $test2 ye yazılır. 4 lu katsayılarda $klasor16 ye giren modeller 4 uzerinden agırlıklı ortalamalarıyla $test3 e yazılır. $test3 deki modeller eşit ağırlıklarla $test4 e yazılır. $test5, $test6,$test7,$test8 e $klasor16 dekiler yerine $klasor14 dekiler yazılır.
+#awk {'print "cdo mulc," $2 " ../../../../../" $1 "/$klasor9/$var1$symbol1$date1.nc" " " $1 ".nc"'} test_v1 >test_v2
+for line110 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara11
+paste ara11 COEF_$klasor16_final COEF_$klasor16$symbol2.txt_v4 >test_v1 
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " "$6 ".nc"'} test_v1 >test_v2
+chmod +x test_v2
+./test_v2
+mv *.nc ../$test1/
+cd ../$test1
+cdo enssum $var1_*.nc test_v2.nc
+awk '{ SUM += $1} END { print SUM } ' ../$test10/COEF_$klasor16_final >test_v3
+awk {'print "cdo divc," $1 " test_v2.nc test_v3.nc"'} test_v3 >test_v4
+chmod +x test_v4
+./test_v4
+mv test_v3.nc test1.nc
+cdo splitseas test1.nc test1
+cd ../$test2
+cp ../COEF_$klasor16$symbol2.txt_v4 .
+sayi=0
+for line8 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+cp $dir4/$line8/$klasor9/$var1$symbol1$date1.nc $line8.nc
+done
+sayi="$(wc -l COEF_$klasor16$symbol2.txt_v4 | awk '{print $1}')"
+cdo enssum $var2$symbol1*.nc sumtest2_v1.nc
+cdo divc,$sayi sumtest2_v1.nc test2_v1.nc
+rm sumtest2_v1.nc
+mv test2_v1.nc test2.nc
+cdo splitseas test2.nc test2
+#
+cd ../$test3
+cp ../COEF_$klasor16$symbol2.txt_v4 .
+for line9 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+cp $dir5/$klasor11/$klasor11lt$line9.nc $line9.nc
+done
+ls *.nc* >list10
+for line10 in $(cat list10)
+do
+cdo infov $line10 >./a$line10.txt
+sed 1d ./a$line10.txt >./a2$line10.txt
+awk {'print $10'} ./a2$line10.txt >SONUC$line10.txt
+done
+rm a*.txt
+cat SONUC$var2$symbol1* >test3_v1
+rev test3_v1 >test3_v3
+echo "$(cat test3_v3)" | awk -F'cn.' '{print $NF}' >test3_v4
+rev test3_v4 >test3_v5
+paste test3_v1 test3_v5 >test_v3
+#awk {'print "cdo mulc," $1 " ../../../../../" $2 "/$klasor9/$var1$symbol1$date1.nc" " coef" $2 ".nc" '} test_v3 >test_v4
+for line111 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara11
+cat SONUC$var2$symbol1* >coeff.txt
+#paste ara11 COEF_$klasor16_final COEF_$klasor16$symbol2.txt_v4 >test_v1 
+#awk {'print $1" " $2 $5" "$3 $6"/"$4 " "$6 ".nc"'} test_v1 >test_v2
+paste ara11 coeff.txt COEF$symbol1$klasor16$symbol2.txt_v4 >test_v3
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " coef"$6 ".nc"'} test_v3 >test_v4
+chmod +x test_v4
+./test_v4
+cdo enssum coef*.nc test_v4.nc
+awk '{ SUM+= $1} END { print SUM } ' test3_v1 >test3_v5
+awk {'print "cdo divc," $1 " test_v4.nc test_v5.nc"'} test3_v5 >test3_v6
+chmod +x test3_v6
+./test3_v6
+mv test_v5.nc test3.nc
+cdo splitseas test3.nc test3
+cd ../$test4
+cp ../$test3/COEF_$klasor16$symbol2.txt_v4 .
+for line11 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+cp $dir2/$line11/$klasor9/$klasor10_3/$var1$symbol1$date1.nc $line11.nc
+done
+ls $var2*.nc* >list12
+for line12 in $(cat list12)
+do
+cdo infov $line12 >./a$line12.txt
+sed 1d ./a$line12.txt >./a2$line12.txt
+awk {'print $11'} ./a2$line12.txt >a3$line12.txt
+awk {'print $9'} ./a2$line12.txt >a4$line12.txt
+awk {'print $10'} ./a2$line12.txt >a5$line12.txt
+done
+cat a3*.txt >max.txt
+cat a4*.txt >min.txt
+cat a5*.txt >coef.txt
+if((inte3==30));then
+cp ../SONUC_13.R .
+Rscript <(cat SONUC_13.R)
+elif((inte3==31));then
+cp ../SONUC_13.R .
+Rscript <(cat SONUC_13.R)
+elif((inte3==32));then
+cp ../SONUC_10.R .
+Rscript <(cat SONUC_10.R)
+elif((inte3==33));then
+cp ../SONUC_10.R .
+Rscript <(cat SONUC_10.R)
+elif((inte3==34));then
+cp ../SONUC_10.R .
+Rscript <(cat SONUC_10.R)
+elif((inte3==35));then
+cp ../SONUC_10.R .
+Rscript <(cat SONUC_10.R)
+fi
+#cp ../SONUC_10.R .
+#Rscript <(cat SONUC_10.R)
+cp ../$test3/COEF_$klasor16$symbol2.txt_v4 .
+#paste coef.txt $test3_v5 >$test4_v1
+for line111 in $(cat COEF_$klasor16$symbol2.txt_v4)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara12
+paste norm_coef.txt COEF_$klasor16$symbol2.txt_v4 >test4_v1
+paste ara12 test4_v1 >ara13
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " coeff"$6 ".nc"'} ara13 >test4_v2
+#awk {'print "cdo mulc," $1 " ../../../../../" $2 "/$klasor9/$var1$symbol1$date1.nc" " coeff" $2 ".nc" '} $test4_v1 >$test4_v2
+chmod +x test4_v2
+./test4_v2
+cdo enssum coeff*.nc test4_v5.nc
+awk '{ SUM += $1} END { print SUM } ' norm_coef.txt >test4_v5
+awk {'print "cdo divc," $1 " test4_v5.nc test_v6.nc"'} test4_v5 >test4_v6
+chmod +x test4_v6
+./test4_v6
+mv test_v6.nc test4.nc
+cdo splitseas test4.nc test4
+#cut -c14-96 COEF_$klasor16.txt >COEF_$klasor16_v_2.txt
+#cut -c14-86 COEF_$klasor16.txt >COEF_$klasor16_v_3.txt
+#rev COEF_$klasor16_v_3.txt >COEF_$klasor16_v_4.txt
+#echo "$(cat COEF_$klasor16_v_4.txt)" | awk -F'.' '{print $NF}' >COEF_$klasor16_v_5.txt
+#rev COEF_$klasor16_v_5.txt >COEF_$klasor16_v_6.txt
+cp $dir1/$klasor12/li$klasor13$symbol2.txt_v4 .
+for line14 in $(cat li$klasor13$symbol2.txt_v4)
+do
+cd $dir2/$line14/$klasor9/$klasor10_1
+ls *.nc* >list15
+for line15 in $(cat list15)
+do
+cdo infov $line15 >${dir1}/${klasor12}/${test9}/${klasor13}/a$line14$line15.txt
+sed 1d $dir1/$klasor12/$test9/$klasor13/a$line14$line15.txt >${dir1}/${klasor12}/${test9}/${klasor13}/a2$line14$line15.txt
+awk {'print $10'} $dir1/$klasor12/$test9/$klasor13/a2$line14$line15.txt >${dir1}/${klasor12}/${test9}/${klasor13}/SONUC$line14$line15.txt
+done
+cd $dir1
+done
+cd $dir1/$klasor12/$test9/$klasor13
+rm a*.txt
+cp $dir1/$klasor12/li$klasor13$symbol2.txt_v4 .
+for line16 in $(cat li$klasor13$symbol2.txt_v4)
+do
+paste SONUC$line16*$seas1.nc4.txt SONUC$line16*$seas2.nc4.txt SONUC$line16*$seas3.nc4.txt SONUC$line16*$seas4.nc4.txt >$line16.txt
+done
+rm SONUC*.txt
+cd $dir1/$klasor12
+for line17 in $(cat COEF_$klasor14$symbol2.txt_v4)
+do
+cd $dir2/$line17/$klasor9/$klasor10_1
+ls *.nc* >list18
+for line18 in $(cat list18)
+do
+cdo infov $line18 >${dir1}/${klasor12}/${test9}/${klasor14}/a$line17$line18.txt
+sed 1d $dir1/$klasor12/$test9/$klasor14/a$line17$line18.txt >${dir1}/${klasor12}/${test9}/${klasor14}/a2$line17$line18.txt
+awk {'print $10'} $dir1/$klasor12/$test9/$klasor14/a2$line17$line18.txt >${dir1}/${klasor12}/${test9}/${klasor14}/SONUC$line17$line18.txt
+done
+cd $dir1
+done
+cd $dir1/$klasor12/$test9/$klasor14
+rm a*.txt
+cp ../../COEF_$klasor14$symbol2.txt_v4 .
+for line19 in $(cat COEF_$klasor14$symbol2.txt_v4)
+do
+paste SONUC$line19*$seas1.nc4.txt SONUC$line19*$seas2.nc4.txt SONUC$line19*$seas3.nc4.txt SONUC$line19*$seas4.nc4.txt >$line19.txt
+done
+rm SONUC*.txt
+cd $dir1/$klasor12/$test9
+cp $dir1/$klasor12/$test10/TRAIN/NEGATIF.txt $dir1/$klasor12/$test9/
+cp $dir1/$klasor12/$test10/TRAIN/POZTIF.txt $dir1/$klasor12/$test9/
+cp $dir1/$klasor12/$test10/TRAIN/HEPSI.txt $dir1/$klasor12/$test9/
+cd $dir1/$klasor12/$test9/
+mkdir TRAIN
+mv *.txt ./TRAIN/
+cd $klasor13
+cat $var2*txt >$klasor13.txt
+cd ../$klasor14
+cat $var2*txt >$klasor14.txt
+cd ..
+cp ../SONUC_9.R .
+Rscript <(cat SONUC_9.R)
+awk {'print "-1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_negatif.txt >train_negatif.txt
+awk {'print "+1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_pozitif.txt >train_pozitif.txt
+awk {'print "-1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_sucesss.txt >train_sucess.txt
+awk {'print "+1 1:" $1 " 2:" $2" 3:" $3" 4:" $4'} norm_unsucess.txt >train_unsucess.txt
+cat train_negatif.txt train_pozitif.txt >TRAIN.txt
+cat train_sucess.txt train_unsucess.txt >TEST.txt
+$dir3/./svm_learn TRAIN.txt MODEL.txt
+$dir3/./svm_classify TEST.txt MODEL.txt RESULT_SVM.txt >SONUC_run.txt
+cp ../COEF_SUCESS.txt .
+cp ../COEF_SUCESS_list.txt_v4 .
+awk {'print $2'} COEF_SUCESS.txt >COEF_SUCESS_final
+cp $dir1/$klasor12/COEF_SUCESS_list.txt_v4 .
+paste COEF_SUCESS_list.txt_v4 COEF_SUCESS_final >test_v1
+for line113 in $(cat COEF_SUCESS_list.txt_v4)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara13
+paste ara13 COEF_SUCESS_final COEF_SUCESS_list.txt_v4 >test1_v1 
+#awk {'print $1" " $2 $5" "$3 $6"/"$4 " coef"$6 ".nc"'} test_v3 >test_v4
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " coef"$6 ".nc"'} test1_v1 >test_v2
+#awk {'print "cdo mulc," $2 " ../../../../../" $1 "/$klasor9/$var1$symbol1$date1.nc" " " $1 ".nc"'} test_v1 >test_v2
+chmod +x test_v2
+./test_v2
+mv *.nc ../$test5
+cd ../$test5
+cdo enssum $var2_*.nc test_v2.nc
+awk '{ SUM += $1} END { print SUM } ' ../$test9/COEF_SUCESS_final >test_v3
+awk {'print "cdo divc," $1 " test_v2.nc test_v3.nc"'} test_v3 >test_v4
+chmod +x test_v4
+./test_v4
+mv test_v3.nc test5.nc
+cdo splitseas test5.nc test5
+cd ../$test6
+cp ../COEF_SUCESS_list.txt_v4 .
+sayi2=0
+for line18 in $(cat COEF_SUCESS_list.txt_v4)
+do
+cp $dir4/$line18/$klasor9/$var1$symbol1$date1.nc $line18.nc
+done
+sayi2="$(wc -l COEF_SUCESS_list.txt_v4 | awk '{print $1}')"
+cdo enssum $var2*.nc sumtest2_v1.nc
+cdo divc,$sayi2 sumtest2_v1.nc test2_v1.nc
+rm sumtest2_v1.nc
+mv test2_v1.nc test6.nc
+cdo splitseas test6.nc test6
+cd ../$test7
+cp ../COEF_SUCESS_list.txt_v4 .
+for line19 in $(cat COEF_SUCESS_list.txt_v4)
+do
+cp $dir5/$klasor11/$klasor11lt$line19.nc $line19.nc
+done
+ls *.nc* >list20
+for line20 in $(cat list20)
+do
+cdo infov $line20 >./a$line20.txt
+sed 1d ./a$line20.txt >./a2$line20.txt
+awk {'print $10'} ./a2$line20.txt >SONUC$line20.txt
+done
+rm a*.txt
+cat SONUC$var2* >test3_v1
+ls $var2* >test3_v2
+rev test3_v2 >test3_v3
+echo "$(cat test3_v3)" | awk -F'cn.' '{print $NF}' >test3_v4
+rev test3_v4 >test3_v5
+#paste $test3_v1 $test3_v5 >test_v3
+for line114 in $(cat COEF_SUCESS_list.txt_v4)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara14
+paste ara14 test3_v1 COEF_SUCESS_list.txt_v4 >test_v3
+#awk {'print $1" " $2 $5" "$3 $6"/"$4 " coef"$6 ".nc"'} test_v3 >test_v4
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " coef"$6 ".nc"'} test_v3 >test_v4
+#awk {'print "cdo mulc," $1 " ../../../../../" $2 "/$klasor9/$var1$symbol1$date1.nc" " coef" $2 ".nc" '} test_v3 >test_v4
+chmod +x test_v4
+./test_v4
+cdo enssum coef*.nc test_v4.nc
+awk '{ SUM += $1} END { print SUM } ' test3_v1 >test_v5
+awk {'print "cdo divc," $1 " test_v4.nc test_v5.nc"'} test_v5 >test_v6
+chmod +x test_v6
+./test_v6
+mv test_v5.nc test7.nc
+cdo splitseas test7.nc test7
+cd ../$test8
+cp ../$test7/test3_v5 .
+for line21 in $(cat test3_v5)
+do
+cp $dir2/$line21/$klasor9/$klasor10_3/$var1$symbol1$date1.nc $line21.nc
+done
+ls $var2*.nc* >list22
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./a$line22.txt
+sed 1d ./a$line22.txt >./a2$line22.txt
+awk {'print $11'} ./a2$line22.txt >a3$line22.txt
+awk {'print $9'} ./a2$line22.txt >a4$line22.txt
+awk {'print $10'} ./a2$line22.txt >a5$line22.txt
+done
+cat a3*.txt >max.txt
+cat a4*.txt >min.txt
+cat a5*.txt >coef.txt
+cp ../SONUC_13.R .
+Rscript <(cat SONUC_13.R)
+cp ../$test7/test3_v5 .
+#paste coef.txt $test3_v5 >$test4_v1
+#awk {'print "cdo mulc," $1 " ../../../../../" $2 "/$klasor9/$var1$symbol1$date1.nc" " coeff" $2 ".nc" '} $test4_v1 >$test4_v2
+for line115 in $(cat test3_v5)
+do
+echo "cdo mulc, $dir2/ $klasor9/$var1$symbol1$date1.nc"
+done >ara15
+paste norm_coef.txt test3_v5 >test4_v1
+paste ara15 test4_v1 >ara13
+awk {'print $1" " $2 $5" "$3 $6"/"$4 " coeff"$6 ".nc"'} ara13 >test4_v2
+chmod +x test4_v2
+./test4_v2
+cdo enssum coeff*.nc test4_v5.nc
+awk '{ SUM += $1} END { print SUM } ' norm_coef.txt >test4_v5
+awk {'print "cdo divc," $1 " test4_v5.nc test_v6.nc"'} test4_v5 >test4_v6
+chmod +x test4_v6
+./test4_v6
+mv test_v6.nc test8.nc
+cdo splitseas test8.nc test8
+cd ../../
+done
+#mkdir RESULT
+cd $dir4
+echo "ISIMLER BITTI"
+echo " ara2_4 basladı"
+j=27
+i=0
+cd $dir4
+echo "$klasor5_1 $klasor5_2 $klasor5_4 $klasor5_6 $klasor5_3 $klasor5_5" >listmethod
+for line4 in $(cat listmethod)
+#1
+do
+cd $dir4/$line4/$dir55
+# $klasor5_3 de models e girdi
+ls *.nc >list22
+mkdir ARA
+for line22 in $(cat list22)
+#2
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+done
+#2 bitti
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*
+echo "liUNSUCESS2_list.txt liUNSUCESS_list.txt COEF_SUCESS2_list.txt COEF_SUCESS_list.txt" >liste
+#FILE 0 olusturdu
+for line in $(cat liste)
+#3
+do
+echo "$(cat $line)" | awk -F'SONUClim' '{print $NF}' >a$line
+echo "$(cat $line)" | awk -F'SONUClimtas_AFR-44_' '{print $NF}' >b3$line
+done
+#3 bitticp
+for line in $(cat liste)
+#4
+do
+rev b3$line >b$line
+rev a$line >c$line
+echo "$(cat c$line)" | awk -F'txt.' '{print $NF}' >d$line
+echo "$(cat b$line)" | awk -F'txt.' '{print $NF}' >f$line
+rev d$line >f2$line
+rev f$line >d2$line
+#4 bitti
+mkdir F3ARA
+for line5 in $(cat d2$line)
+#5
+do
+echo $line5 | awk -F'_historical_' '{print $1}' >./F3ARA/f3_1$line5.txt
+echo $line5 | awk -F'p1_' '{print $2}' >./F3ARA/f3_2$line5.txt
+done
+#5 bitti
+cat ./F3ARA/f3_1*.txt >f4$line
+cat ./F3ARA/f3_2*.txt >f5$line
+paste f4$line f5$line >f6$line
+awk {'print $1 $2'} f6$line >f9$line
+awk {'print $1 "---" $2'} f6$line >f7$line
+for line5 in $(cat f7$line)
+#6
+do
+echo $line5 | awk -F'_' '{print $1}' >./F3ARA/f3_7$line5.txt
+done
+#6 bitti
+cat ./F3ARA/f3_7*.txt >f8$line
+rm -rf F3ARA
+rm f4* f5* f6* f7*
+done
+echo "liUNSUCESS2_list.txt liUNSUCESS_list.txt COEF_SUCESS2_list.txt COEF_SUCESS_list.txt" >liste
+for line in $(cat liste)
+#7
+do
+awk {'print "limtas_AFR-44_" $1 '} d2$line >d3$line
+paste d3$line f9$line >g$line
+awk {'print "mv " $1" " $2'} g$line >move$line
+done
+#7 bitti
+echo "liUNSUCESS2_list.txt COEF_SUCESS2_list.txt " >liste2
+for line2 in $(cat liste2)
+#8
+do
+chmod +x move$line2
+./move$line2
+#8 bitti
+done
+pwd
+done
+#1 bitti
+echo "$klasor5_1 $klasor5_2 $klasor5_4 $klasor5_6 $klasor5_3 $klasor5_5">listmethod
+for line4 in $(cat listmethod)
+do
+echo "DJF MAM JJA SON ANNUAL" >mevsim
+for mevs in $(cat mevsim)
+do
+cd $dir4/$line4/$mevs
+cp $dir4/$line4/$dir55/liUNSUCESS2_list.txt .
+cp $dir4/$line4/$dir55/liUNSUCESS_list.txt .
+cp $dir4/$line4/$dir55/COEF_SUCESS_list.txt .
+cp $dir4/$line4/$dir55/COEF_SUCESS2_list.txt .
+ls *.nc >list22
+mkdir ARA
+for line22 in $(cat list22)
+#2
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+done
+#2 bitti
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*
+echo "liUNSUCESS2_list.txt liUNSUCESS_list.txt COEF_SUCESS2_list.txt COEF_SUCESS_list.txt" >liste
+for line in $(cat liste)
+#3
+do
+echo "$(cat $line)" | awk -F'SONUClim' '{print $NF}' >a$line
+echo "$(cat $line)" | awk -F'SONUClimtas_AFR-44_' '{print $NF}' >b3$line
+done
+#3 bitticp
+for line in $(cat liste)
+#5
+do
+rev b3$line >b$line
+rev a$line >c$line
+echo "$(cat c$line)" | awk -F'txt.' '{print $NF}' >d$line
+echo "$(cat b$line)" | awk -F'txt.' '{print $NF}' >f$line
+rev d$line >f2$line
+rev f$line >d2$line
+mkdir F3ARA
+for line5 in $(cat d2$line)
+#6
+do
+echo $line5 | awk -F'_historical_' '{print $1}' >./F3ARA/f3_1$line5.txt
+echo $line5 | awk -F'p1_' '{print $2}' >./F3ARA/f3_2$line5.txt
+done
+#6 bitti
+cat ./F3ARA/f3_1*.txt >f4$line
+cat ./F3ARA/f3_2*.txt >f5$line
+paste f4$line f5$line >f6$line
+awk {'print $1 $2'} f6$line >f9$line
+awk {'print $1 "---" $2'} f6$line >f7$line
+for line5 in $(cat f7$line)
+#7
+do
+echo $line5 | awk -F'_' '{print $1}' >./F3ARA/f3_7$line5.txt
+done
+#7 bitti
+cat ./F3ARA/f3_7*.txt >f8$line
+rm -rf F3ARA
+rm f4* f5* f6* f7*
+done
+echo "liUNSUCESS2_list.txt liUNSUCESS_list.txt COEF_SUCESS2_list.txt COEF_SUCESS_list.txt" >liste
+for line in $(cat liste)
+#4
+do
+awk {'print "lttas_AFR-44_" $1 '} d2$line >d3$line
+paste d3$line f9$line >g$line
+awk {'print "mv " $1" " $2'} g$line >move$line
+done
+echo "liUNSUCESS2_list.txt COEF_SUCESS2_list.txt " >liste2
+for line2 in $(cat liste2)
+#8
+do
+chmod +x move$line2
+./move$line2
+#8 bitti
+done
+pwd
+done
+done
+cd $dir4
+echo " ara1 basladı"
+j=27
+i=0
+cd $dir4
+mkdir $dir40 $dir41 $dir42 $dir43 $dir44 $dir45
+for inte3 in {40..45..1}
+#1
+do
+if((inte3==40));then
+cd $dir40
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULT/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_1/$klasor6/$klasor7/$klasor12
+deg=RESULTANA
+elif((inte3==41));then
+cd $dir41
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTRMSE/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_2/$klasor6/$klasor7/$klasor12
+deg=RESULTRMSE
+elif((inte3==42));then
+cd $dir42
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTTEST/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_3/$klasor6/$klasor7/$klasor12
+deg=RESULTTTEST
+elif((inte3==43));then
+cd $dir43
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTIMCOR/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_4/$klasor6/$klasor7/$klasor12
+deg=RESULTTIMCOR
+elif((inte3==44));then
+cd $dir44
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTTEST/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_5/$klasor6/$klasor7/$klasor12
+deg=RESULTYTTEST
+elif((inte3==45));then
+cd $dir45
+dir1=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTIMCOR/
+dir9=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7/MODELS
+dir10=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/SUM
+dir11=$klasor1/$klasor2/$klasor3/$klasor4/$klasor5_6/$klasor6/$klasor7/$klasor12
+deg=RESULTYTIMCOR
+fi
+#cd $dir8
+for i in {1..8..1}
+do
+cd $dir8
+mkdir RESULT$i
+cd RESULT$i
+echo "$i"
+cp $dir11/TEST$i/test$i*.nc4 $dir8/RESULT$i/
+cp $dir11/TEST$i/test$i.nc $dir8/RESULT$i/
+cp $dir11/TEST$i/*oef*txt $dir8/RESULT$i/
+cp $dir7/$klasor9/selTAS_$date1*.nc $dir8/RESULT$i/
+ls *.nc4 *.nc >listnc2
+#cd RESULT$i
+for line25 in $(cat listnc2)
+do
+cdo timmean $line25 MEAN$line25
+done
+mkdir FARK
+ cdo sub MEANtest*.nc MEANselTAS_$date1.nc ./FARK/FARKYEAR.nc
+ cdo sub MEANtest*DJF.nc4 MEANselTAS_$date1$seas1.nc ./FARK/FARKDJF.nc
+ cdo sub MEANtest*MAM.nc4 MEANselTAS_$date1$seas2.nc ./FARK/FARKMAM.nc
+ cdo sub MEANtest*JJA.nc4 MEANselTAS_$date1$seas3.nc ./FARK/FARKJJA.nc
+ cdo sub MEANtest*SON.nc4 MEANselTAS_$date1$seas4.nc ./FARK/FARKSON.nc
+ cdo abs ./FARK/FARKYEAR.nc ./FARK/ABSFARKYEAR.nc
+ cdo abs ./FARK/FARKDJF.nc ./FARK/ABSFARKDJF.nc
+ cdo abs ./FARK/FARKMAM.nc ./FARK/ABSFARKMAM.nc
+ cdo abs ./FARK/FARKJJA.nc ./FARK/ABSFARKJJA.nc
+ cdo abs ./FARK/FARKSON.nc ./FARK/ABSFARKSON.nc
+ ls *.nc *.nc4 >listnc2
+  for line24 in $(cat listnc2)
+  do
+cdo infov $line24 >a$line24.txt
+  sed 1d a$line24.txt >a2$line24.txt
+  awk {'print $10'} a2$line24.txt > $line24.txt
+  rm a*.txt
+  done
+cd FARK
+ ls *.nc *.nc4 >listnc2
+  for line24 in $(cat listnc2)
+  do
+cdo infov $line24 >a$line24.txt
+  sed 1d a$line24.txt >a2$line24.txt
+  awk {'print $10'} a2$line24.txt > $line24.txt
+  rm a*.txt
+  done
+cat ABSFARKDJF.nc.txt ABSFARKMAM.nc.txt ABSFARKJJA.nc.txt ABSFARKSON.nc.txt >$dir4/$deg$i$symbol1$var8$var13.csv
+cat FARKDJF.nc.txt FARKMAM.nc.txt FARKJJA.nc.txt FARKSON.nc.txt >$dir4/$deg$i$symbol1$var7.csv
+cp ABSFARKYEAR.nc.txt $dir4/$deg$i$symbol1$var8.csv
+cp FARKYEAR.nc.txt $dir4/$deg$i$symbol1$var11.csv
+cat ABSFARKDJF.nc.txt ABSFARKMAM.nc.txt ABSFARKJJA.nc.txt ABSFARKSON.nc.txt >$dir4/$deg$i$symbol1$i$symbol1$var8$var13.txt
+cat FARKDJF.nc.txt FARKMAM.nc.txt FARKJJA.nc.txt FARKSON.nc.txt >$dir4/$deg$i$symbol1$var7.txt
+cp ABSFARKYEAR.nc.txt $dir4/$deg$i$symbol1$var8.txt
+cp FARKYEAR.nc.txt $dir4/$deg$i$symbol1$var11.txt
+mkdir -p $dir8/MODELS2
+cp $dir9/*.nc $dir8/MODELS2/
+cp $dir9/SUCESS.txt $dir8/MODELS2/SUCESS.txt
+cp $dir9/SUCESS2.txt $dir8/MODELS2/SUCESS2.txt
+cp $dir1/limit_select.nc $dir8/MODELS2/
+mkdir -p $dir8/MODELS
+cp $dir10/*.nc $dir8/MODELS/
+cd ../../
+done
+done
+cd $dir2
+echo " CODE_1A BITTI"
+mkdir -p $klasor17/$klasor18
+cd ./$klasor17/$klasor18
+arra=(.nc $seas1.nc $seas2.nc $seas4.nc $seas3.nc)
+for il in "${arra[@]}"
+do
+cdo enssum $dir2/$var2*/$klasor9/$klasor10_3/$var1$symbol1$date1$il j$klasor10_3$symbol1$il
+cdo divc,$j j$klasor10_3$symbol1$il $klasor10_3$symbol1$il
+rm j$klasor10_3$symbol1$il
+cdo enssum $dir2/$var2*/$klasor9/$klasor10_2/$var1$symbol1$date1$il j$klasor10_2$symbol1$il
+cdo divc,$j j$klasor10_2$symbol1$il $klasor10_2$symbol1$il
+rm j$klasor10_2$symbol1$il
+done
+arra2=(.nc $seas1.nc4 $seas2.nc4 $seas4.nc4 $seas3.nc4)
+for i in "${arra2[@]}"
+do
+cdo enssum $dir2/$var2*/$klasor9/$klasor10_1/$var1$symbol1$date1$i j$klasor10_1$symbol1$i
+cdo divc,$j j$klasor10_1$symbol1$i $klasor10_1$symbol1$i
+rm j$klasor10_1$symbol1$i
+cdo enssum $dir2/$var2*/$klasor9/$var1$symbol1$date1$i j$var3$i
+cdo divc,$j j$var3$i $var3$i
+rm j$var3$i
+cdo yearmean $var3$i $var4$var3$i
+cdo timstd $var4$var3$i $var5$i
+done
+ls *.nc *.nc4 >listnc
+for line24 in $(cat listnc)
+do
+cdo infov $line24 >a$line24.txt
+sed 1d a$line24.txt >a2$line24.txt
+awk {'print $10'} a2$line24.txt > $line24.txt
+rm a*.txt
+done
+cat $klasor10_3$symbol1$seas1.nc.txt $klasor10_3$symbol1$seas2.nc.txt $klasor10_3$symbol1$seas3.nc.txt $klasor10_3$symbol1$seas4.nc.txt > $dir4/RESULTENSEMBLE$var6$var9$var7.txt
+cat $klasor10_1$symbol1$seas1.nc4.txt $klasor10_1$symbol1$seas2.nc4.txt $klasor10_1$symbol1$seas3.nc4.txt $klasor10_1$symbol1$seas4.nc4.txt >$dir4/RESULTENSEMBLE$var6$var7.txt
+cp $klasor10_3$symbol1.nc.txt $dir4/RESULTENSEMBLE$var6$var8.txt
+cp $klasor10_1$symbol1.nc.txt $dir4/RESULTENSEMBLE$var6$klasor10_1$symbol1.txt
+cd ..
+cd $dir4
+echo " ara3a basladı"
+j=27
+i=0
+cd $dir4
+mkdir $dir21
+mkdir $dir22
+mkdir $dir63
+mkdir $dir64
+mkdir $dir65
+mkdir $dir66
+mkdir $dir67
+mkdir $dir68
+mkdir $dir69
+mkdir $dir70
+mkdir $dir71
+mkdir $dir72
+mkdir $dir73
+cd $dir4
+#ABSFARKTIMMEAN FARKTIMMEAN
+arra2=(TIMMEAN STD YSTD CV YCV TIMVAR YTIMVAR TTEST YTTEST TIMCOR YTIMCOR)
+for il3 in "${arra2[@]}"
+do
+cd $il3
+#for inte2 in {21..27..1}
+#1
+#do
+#if((inte2==21));then
+#cd $dir21
+#elif((inte2==22));then
+#cd $dir22
+#elif((inte2==23));then
+#cd $dir63
+#elif((inte2==24));then
+#cd $dir64
+#elif((inte2==25));then
+#cd $dir65
+#elif((inte2==26));then
+#cd $dir66
+#elif((inte2==27));then
+#cd $dir67
+#fi
+cp $dir15/f9liUNSUCESS2_list.txt .
+cp $dir15/f9COEF_SUCESS2_list.txt .
+cp $dir15/aCOEF_SUCESS2_list.txt .
+cp $dir15/aliUNSUCESS2_list.txt .
+for line5 in $(cat aCOEF_SUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >j$line5.txt
+done
+cat j*.txt >ajCOEF_SUCESS2_list.txt
+rm j*.txt
+for line5 in $(cat aliUNSUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >hi$line5.txt
+done
+cat hi*.txt >ajliUNSUCESS2_list.txt
+rm hi*.txt
+paste ajliUNSUCESS2_list.txt f9liUNSUCESS2_list.txt >akliUNSUCESS2_list.txt
+paste ajCOEF_SUCESS2_list.txt f9COEF_SUCESS2_list.txt >akCOEF_SUCESS2_list.txt
+for line9 in $(cat ajliUNSUCESS2_list.txt)
+do
+echo "cp $dir4/$line9/$klasor9/$il3/$var1$symbol1$date1 $line9"
+done >anliUNSUCESS2_list.txt
+for line9 in $(cat ajCOEF_SUCESS2_list.txt)
+do
+echo "cp $dir4/$line9/$klasor9/$il3/$var1$symbol1$date1 $line9"
+done >anCOEF_SUCESS2_list.txt
+for line5 in $(cat f9COEF_SUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >ncsiz$line5.txt
+done
+cat ncsiz*.txt >aj2f9COEF_SUCESS2_list.txt
+rm ncsiz*.txt
+for line5 in $(cat f9liUNSUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >zncsiz$line5.txt
+done
+cat zncsiz*.txt >aj2f9liUNSUCESS2_list.txt
+rm zncsiz*.txt
+paste anCOEF_SUCESS2_list.txt aj2f9COEF_SUCESS2_list.txt >apCOEF_SUCESS2_list.txt
+paste anliUNSUCESS2_list.txt aj2f9liUNSUCESS2_list.txt >apliUNSUCESS2_list.txt
+mkdir -p ANNUAL DJF MAM JJA SON
+awk {'print $1" "$2".nc ./ANNUAL/"$4".nc"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_ANNUAL
+awk {'print $1" "$2"DJF.nc4 ./DJF/"$4"DJF.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_DJF
+awk {'print $1" "$2"MAM.nc4 ./MAM/"$4"MAM.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_MAM
+awk {'print $1" "$2"JJA.nc4 ./JJA/"$4"JJA.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_JJA
+awk {'print $1" "$2"SON.nc4 ./SON/"$4"SON.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_SON
+awk {'print $1" "$2".nc ./ANNUAL/"$4".nc"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_ANNUAL
+awk {'print $1" "$2"DJF.nc4 ./DJF/"$4"DJF.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_DJF
+awk {'print $1" "$2"MAM.nc4 ./MAM/"$4"MAM.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_MAM
+awk {'print $1" "$2"JJA.nc4 ./JJA/"$4"JJA.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_JJA
+awk {'print $1" "$2"SON.nc4 ./SON/"$4"SON.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_SON
+ls move* >listmove
+for line14 in $(cat listmove)
+do
+chmod +x $line14
+./$line14
+done
+cd ../
+done
+cd $dir4
+arra4=(FARKTIMMEAN ABSFARKTIMMEAN)
+for il5 in "${arra4[@]}"
+do
+cd $il5
+#for inte2 in {21..27..1}
+#1
+#do
+#if((inte2==21));then
+#cd $dir21
+#elif((inte2==22));then
+#cd $dir22
+#elif((inte2==23));then
+#cd $dir63
+#elif((inte2==24));then
+#cd $dir64
+#elif((inte2==25));then
+#cd $dir65
+#elif((inte2==26));then
+#cd $dir66
+#elif((inte2==27));then
+#cd $dir67
+#fi
+cp $dir15/f9liUNSUCESS2_list.txt .
+cp $dir15/f9COEF_SUCESS2_list.txt .
+cp $dir15/aCOEF_SUCESS2_list.txt .
+cp $dir15/aliUNSUCESS2_list.txt .
+for line5 in $(cat aCOEF_SUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >j$line5.txt
+done
+cat j*.txt >ajCOEF_SUCESS2_list.txt
+rm j*.txt
+for line5 in $(cat aliUNSUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >hi$line5.txt
+done
+cat hi*.txt >ajliUNSUCESS2_list.txt
+rm hi*.txt
+paste ajliUNSUCESS2_list.txt f9liUNSUCESS2_list.txt >akliUNSUCESS2_list.txt
+paste ajCOEF_SUCESS2_list.txt f9COEF_SUCESS2_list.txt >akCOEF_SUCESS2_list.txt
+for line9 in $(cat ajliUNSUCESS2_list.txt)
+do
+echo "cp $dir4/$line9/$klasor9/$il5/$var1$symbol1$date1 $line9"
+done >anliUNSUCESS2_list.txt
+for line9 in $(cat ajCOEF_SUCESS2_list.txt)
+do
+echo "cp $dir4/$line9/$klasor9/$il5/$var1$symbol1$date1 $line9"
+done >anCOEF_SUCESS2_list.txt
+for line5 in $(cat f9COEF_SUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >ncsiz$line5.txt
+done
+cat ncsiz*.txt >aj2f9COEF_SUCESS2_list.txt
+rm ncsiz*.txt
+for line5 in $(cat f9liUNSUCESS2_list.txt)
+do
+echo $line5 | awk -F'.nc' '{print $1}' >zncsiz$line5.txt
+done
+cat zncsiz*.txt >aj2f9liUNSUCESS2_list.txt
+rm zncsiz*.txt
+paste anCOEF_SUCESS2_list.txt aj2f9COEF_SUCESS2_list.txt >apCOEF_SUCESS2_list.txt
+paste anliUNSUCESS2_list.txt aj2f9liUNSUCESS2_list.txt >apliUNSUCESS2_list.txt
+mkdir -p ANNUAL DJF MAM JJA SON
+awk {'print $1" "$2".nc ./ANNUAL/"$4".nc"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_ANNUAL
+awk {'print $1" "$2"DJF.nc ./DJF/"$4"DJF.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_DJF
+awk {'print $1" "$2"MAM.nc ./MAM/"$4"MAM.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_MAM
+awk {'print $1" "$2"JJA.nc ./JJA/"$4"JJA.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_JJA
+awk {'print $1" "$2"SON.nc ./SON/"$4"SON.nc4"'} apCOEF_SUCESS2_list.txt >moveCOEF_SUCESS2_SON
+awk {'print $1" "$2".nc ./ANNUAL/"$4".nc"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_ANNUAL
+awk {'print $1" "$2"DJF.nc ./DJF/"$4"DJF.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_DJF
+awk {'print $1" "$2"MAM.nc ./MAM/"$4"MAM.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_MAM
+awk {'print $1" "$2"JJA.nc ./JJA/"$4"JJA.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_JJA
+awk {'print $1" "$2"SON.nc ./SON/"$4"SON.nc4"'} apliUNSUCESS2_list.txt >moveliUNSUCESS2_SON
+ls move* >listmove
+for line14 in $(cat listmove)
+do
+chmod +x $line14
+./$line14
+done
+cd ../
+done
+cd $dir4
+echo " graph basladı"
+j=27
+i=0
+cd $dir4
+echo "CV YCV TIMMEAN FARKTIMMEAN ABSFARKTIMMEAN STD YSTD TTEST YTTEST TIMCOR YTIMCOR TIMVAR YTIMVAR" >klas
+for kla in $(cat klas)
+do
+cd $kla
+arra=(DJF MAM JJA SON)
+for il in "${arra[@]}"
+do
+cd $il
+j=27
+i=0
+cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+rm f9*
+rm f10*
+rm f11*
+ls *.nc *.nc4 >list22
+mkdir ARA
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+echo "filename$i = $a${lines[$i]}$il.nc4$a"
+echo "f$i = addfile (filename$i, $a r $a)"
+echo "v$i = f$i->tas"
+echo "v$i@long_name=$a$a"
+echo "v$i@units=$a$a"
+#  elif((i==18));then
+#    echo "filename2 = "${lines[2]}""
+#  elif((i==20));then
+#    echo "filename3 = "${lines[1]}""
+#  elif((i==22));then
+#    echo "filename4 = "${lines[4]}""
+#  elif((i==24));then
+#    echo "filename5 = "${lines[3]}""
+#  else
+#    echo "$line"
+#  fi
+((i++))
+#done  < COEF_SUCESS2_list_f2 > ADD_IYI
+done  < $line3 > ADD$line3
+#j=0
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$il$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++)) 
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++))
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ..
+j=27
+i=0
+done
+cd ..
+i=0
+j=27
+done
+j=27
+i=0
+cd $dir4
+echo " graph2 basladı"
+j=27
+i=0
+cd $dir4
+cd TIMMEAN
+mkdir ARACEL
+mv *.nc ./ARACEL
+mv *.nc4 ./ARACEL
+cd ARACEL
+ls *.nc* >list23
+for line23 in $(cat list23)
+do
+cdo subc,273.15 $line23 ../$line23
+done
+cd ../../
+echo "CV YCV TIMMEAN FARKTIMMEAN ABSFARKTIMMEAN STD YSTD TTEST YTTEST TIMCOR YTIMCOR TIMVAR YTIMVAR" >klas
+for kla in $(cat klas)
+do
+cd $kla
+arra=(ANNUAL)
+for il in "${arra[@]}"
+do
+cd $il
+j=27
+i=0
+cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+rm f9*
+rm f10*
+rm f11*
+ls *.nc *.nc4 >list22
+mkdir ARA
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+echo "filename$i = $a${lines[$i]}.nc$a"
+echo "f$i = addfile (filename$i, $a r $a)"
+echo "v$i = f$i->tas"
+echo "v$i@long_name=$a$a"
+echo "v$i@units=$a$a"
+#  elif((i==18));then
+#    echo "filename2 = "${lines[2]}""
+#  elif((i==20));then
+#    echo "filename3 = "${lines[1]}""
+#  elif((i==22));then
+#    echo "filename4 = "${lines[4]}""
+#  elif((i==24));then
+#    echo "filename5 = "${lines[3]}""
+#  else
+#    echo "$line"
+#  fi
+((i++))
+#done  < COEF_SUCESS2_list_f2 > ADD_IYI
+done  < $line3 > ADD$line3
+#j=0
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$il$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++)) 
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++))
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ..
+j=27
+i=0
+done
+cd ..
+i=0
+j=27
+done
+j=27
+i=0
+cd $dir4
+echo " graph3 basladı"
+j=27
+i=0
+cd $dir4
+echo "$klasor5_1 $klasor5_2 $klasor5_3 $klasor5_5 $klasor5_4 $klasor5_6" >klas
+for kla in $(cat klas)
+do
+cd $kla
+arra=(DJF MAM JJA SON)
+for il in "${arra[@]}"
+do
+cd $il
+j=27
+i=0
+cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+rm f9*
+rm f10*
+rm f11*
+ls *.nc *.nc4 >list22
+mkdir ARA
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+echo "filename$i = $a${lines[$i]}.nc$a"
+echo "f$i = addfile (filename$i, $a r $a)"
+echo "v$i = f$i->tas"
+echo "v$i@long_name=$a$a"
+echo "v$i@units=$a$a"
+#  elif((i==18));then
+#    echo "filename2 = "${lines[2]}""
+#  elif((i==20));then
+#    echo "filename3 = "${lines[1]}""
+#  elif((i==22));then
+#    echo "filename4 = "${lines[4]}""
+#  elif((i==24));then
+#    echo "filename5 = "${lines[3]}""
+#  else
+#    echo "$line"
+#  fi
+((i++))
+#done  < COEF_SUCESS2_list_f2 > ADD_IYI
+done  < $line3 > ADD$line3
+#j=0
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$il$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++)) 
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++))
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ..
+j=27
+i=0
+done
+i=0
+j=27
+cd ..
+done
+j=27
+i=0
+cd $dir4
+echo "METHOD METHODRMSE METHODTTEST METHODYTTEST METHODTIMCOR METHODYTIMCOR" >klas
+for kla in $(cat klas)
+do
+cd $kla
+arra=(DJF MAM JJA SON)
+for il in "${arra[@]}"
+do
+cd $il
+j=27
+i=0
+cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+rm f9*
+rm f10*
+rm f11*
+ls *.nc *.nc4 >list22
+mkdir ARA
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+    echo "filename$i = $a${lines[$i]}.nc$a"
+    echo "f$i = addfile (filename$i, $a r $a)"
+    echo "v$i = f$i->tas"
+    echo "v$i@long_name=$a$a"
+    echo "v$i@units=$a$a"
+#  elif((i==18));then
+#    echo "filename2 = "${lines[2]}""
+#  elif((i==20));then
+#    echo "filename3 = "${lines[1]}""
+#  elif((i==22));then
+#    echo "filename4 = "${lines[4]}""
+#  elif((i==24));then
+#    echo "filename5 = "${lines[3]}""
+#  else
+#    echo "$line"
+#  fi
+  ((i++))
+#done  < COEF_SUCESS2_list_f2 > ADD_IYI
+done  < $line3 > ADD$line3
+#j=0
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+
+
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$il$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++))  
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++)) 
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ..
+j=27
+i=0
+done
+i=0
+j=27
+cd ..
+done
+j=27
+i=0
+cd $dir4
+echo "METHOD METHODRMSE METHODTTEST METHODYTTEST METHODTIMCOR METHODYTIMCOR" >klas
+for kla in $(cat klas)
+do
+cd $kla
+arra=(ANNUAL)
+for il in "${arra[@]}"
+do
+cd $il
+j=27
+i=0
+cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+rm f9*
+rm f10*
+rm f11*
+
+ls *.nc *.nc4 >list22
+mkdir ARA
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+    echo "filename$i = $a${lines[$i]}.nc$a"
+    echo "f$i = addfile (filename$i, $a r $a)"
+    echo "v$i = f$i->tas"
+    echo "v$i@long_name=$a$a"
+    echo "v$i@units=$a$a"
+#  elif((i==18));then
+#    echo "filename2 = "${lines[2]}""
+#  elif((i==20));then
+#    echo "filename3 = "${lines[1]}""
+#  elif((i==22));then
+#    echo "filename4 = "${lines[4]}""
+#  elif((i==24));then
+#    echo "filename5 = "${lines[3]}""
+#  else
+#    echo "$line"
+#  fi
+  ((i++))
+#done  < COEF_SUCESS2_list_f2 > ADD_IYI
+done  < $line3 > ADD$line3
+#j=0
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+
+
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$il$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$il$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $il $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++))  
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++)) 
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ..
+j=27
+i=0
+done
+i=0
+j=27
+cd ..
+done
+j=27
+i=0
+cd $dir4
+echo "METHOD METHODRMSE METHODTTEST METHODYTTEST METHODTIMCOR METHODYTIMCOR" >klas
+for kla in $(cat klas)
+do
+
+cd $kla
+#method a girdi
+
+
+arra=(./ANALIZ/SELECT_1/MODELS)
+for il in "${arra[@]}"
+do
+cd $il
+pwd
+#models e girdi
+j=27
+i=0
+#cp $dir15/f9*list.txt .
+rev f9liUNSUCESS_list.txt >f10liUNSUCESS_list.txt
+cut -c4-46 f10liUNSUCESS_list.txt >f11liUNSUCESS_list.txt
+rev f11liUNSUCESS_list.txt >f12liUNSUCESS_list.txt
+rev f9liUNSUCESS2_list.txt >f10liUNSUCESS2_list.txt
+cut -c4-46 f10liUNSUCESS2_list.txt >f11liUNSUCESS2_list.txt
+rev f11liUNSUCESS2_list.txt >f12liUNSUCESS2_list.txt
+rev f9COEF_SUCESS_list.txt >f10COEF_SUCESS_list.txt
+cut -c4-46 f10COEF_SUCESS_list.txt >f11COEF_SUCESS_list.txt
+rev f11COEF_SUCESS_list.txt >f12COEF_SUCESS_list.txt
+rev f9COEF_SUCESS2_list.txt >f10COEF_SUCESS2_list.txt
+cut -c4-46 f10COEF_SUCESS2_list.txt >f11COEF_SUCESS2_list.txt
+rev f11COEF_SUCESS2_list.txt >f12COEF_SUCESS2_list.txt
+#rm f9*
+rm f10*
+rm f11*
+
+ls *.nc *.nc4 >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >MAX
+cat min*.txt >MIN
+cat ort*.txt >$dir4/RESULT$kla$li.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+rm -rf ARA
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >FILE0
+rm FILE0_*	
+#cp $dir15/FILE0 .
+echo "f12liUNSUCESS_list.txt f12liUNSUCESS2_list.txt f12COEF_SUCESS2_list.txt f12COEF_SUCESS_list.txt" >liste3
+
+for line3 in $(cat liste3)
+do
+i=0
+IFS=$'\n' read -d '' -r -a lines <$line3
+a='"'
+vv='"ps"'
+vy='"b2_2'
+while read line;do
+#  if((i==16));then
+    echo "filename$i = $a${lines[$i]}.nc$a"
+    echo "f$i = addfile (filename$i, $a r $a)"
+    echo "v$i = f$i->tas"
+    echo "v$i@long_name=$a$a"
+    echo "v$i@units=$a$a"
+  ((i++))
+done  < $line3 > ADD$line3
+
+echo "baslangıc $i"
+if((i<=14));then
+echo  "wks = gsn_open_wks($vv,$a$i$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($i,graphic)" >KUCUK1_1$line3
+i=0
+echo "kucuk onbes $i"
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i]}$a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($i) = gsn_csm_contour_map_ce(wks,v$i(nt,:,:), res)"
+((i++))
+done  < $line3 > KUCUK1_1ADD$line3
+
+
+elif((i>=15));then
+echo " buyuk onbes $i"
+k=$(($i-15))
+echo " buyuk onbes k $k"
+j=$(($i-$k))
+#l= echo $((k+12))
+echo "plot = new(15,graphic)" >BUYUK1_1$line3
+echo  "wks = gsn_open_wks($vv,$a$i$line3$a)" >FILEBUYUK1_1$line3
+sed 1,15d $line3 >a$line3
+head -15 $line3 >b$line3
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$((j-15))]}$a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((j-15))) = gsn_csm_contour_map_ce(wks,v$((j-15))(nt,:,:), res)"
+((k++))
+((j++))
+done  < b$line3 > BUYUK1_1ADD$line3
+
+echo "plot = new($((k-15)),graphic)" >BUYUK2_2$line3
+echo  "wks = gsn_open_wks($vv,$vy$line3$a)" >FILEBUYUK2_2$line3
+i=$((0))
+m= echo $(($i-$k))
+while read line;do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a${lines[$i+15]}$a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((i))) = gsn_csm_contour_map_ce(wks,v$((i))(nt,:,:), res)"
+((i++))  
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2_$i
+#done < COEF_SUCESS2_list_f2 > ADD_IYI_2
+done  < a$line3 > BUYUK2_2ADD$line3
+fi
+((i++)) 
+done
+cp $dir13/ncl_* .
+#cp ../FILE0 .
+for line3 in $(cat liste3)
+do
+if [ -e KUCUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEKUCUK1_1$line3 ncl_2 FILE0 ncl_3 KUCUK1_1$line3 KUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+
+elif [ -e BUYUK2_2$line3 ]
+then
+if [ -e BUYUK1_1$line3 ]
+then
+cat ncl_1 ADD$line3 FILEBUYUK1_1$line3 ncl_2 FILE0 ncl_3 BUYUK1_1$line3 BUYUK1_1ADD$line3 ncl_4 >b1_1$line3.ncl
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >b2_2$line3.ncl
+ncl b1_1$line3.ncl
+ncl b2_2$line3.ncl
+else
+echo "Hello"
+fi
+else
+cat ncl_1 ADD$line3 FILEBUYUK2_2$line3 ncl_2 FILE0 ncl_3 BUYUK2_2$line3 BUYUK2_2ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+fi
+done
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cd ../../../
+j=27
+i=0
+done
+i=0
+j=27
+cd ..
+done
+j=27
+i=0
+cd $dir4
+for inte3 in {40..45..1}
+#1
+do
+if((inte3==40));then
+#cd $dir40
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULT/
+dir88=RESULT
+elif((inte3==41));then
+#cd $dir41
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTRMSE/
+dir88=RESULTRMSE
+elif((inte3==42));then
+#cd $dir42
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTTEST/
+dir88=RESULTTTEST
+elif((inte3==43));then
+#cd $dir43
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTIMCOR/
+dir88=RESULTTIMCOR
+elif((inte3==44));then
+#cd $dir44
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTTEST/
+dir88=RESULTYTTEST
+elif((inte3==45));then
+#cd $dir45
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTIMCOR/
+dir88=RESULTYTIMCOR
+fi
+#cd $dir8
+
+cd $dir8
+
+
+    for integ in {1..8..1}
+    do
+cd RESULT$integ/FARK/
+pwd
+ls FARK*.nc >list22
+#ls ./RESULT*/FARK/FARK*.nc >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >$dir8/MAX$integ.txt
+cat min*.txt >$dir8/MIN$integ.txt
+cat ort*.txt >ORTALAMA$integ.txt
+paste ../list22 ORTALAMA$integ.txt >$dir8/RESULT$integ-TEST-FARK.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cd ..
+rm -rf ARA
+cd ../../
+done
+
+cd $dir8
+cat MAX*.txt >MAX
+cat MIN*.txt >MIN
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >$dir8/FARKFILE0
+rm FILE0_*
+integ=0
+
+
+
+cd $dir8
+
+    for integ in {1..8..1}
+    do
+cd RESULT$integ/FARK/
+pwd
+ls ABSFARK*.nc >list22
+
+#ls ./RESULT*/FARK/FARK*.nc >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >$dir8/MAX$integ.txt
+cat min*.txt >$dir8/MIN$integ.txt
+cat ort*.txt >ORTALAMA$integ.txt
+paste ../list22 ORTALAMA$integ.txt >$dir8/RESULT$integ-TEST-ABSFARK.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cd ../
+rm -rf ARA
+cd ../../
+done
+
+cd $dir8
+cat MAX*.txt >MAX
+cat MIN*.txt >MIN
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >$dir8/ABSFARKFILE0
+rm FILE0_*
+integ=0
+
+echo "DJF MAM JJA SON" >mevsimm
+
+for line3 in $(cat mevsimm)
+do
+
+cd $dir8	
+
+    for integ in {1..8..1}
+    do
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename$((integ-1)) = $a./RESULT$integ/FARK/FARK$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tas"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+done >ADD$line3
+
+    echo "filename8 = $a../RESULTS/RESULTENSEMBLE/FARKTIMMEAN_$line3.nc$a" > part1$line3
+    echo "f8 = addfile (filename8, $a r $a)" > part2$line3
+    echo "v8 = f8->tas" > part3$line3
+    echo "v8@long_name=$a$a" > part4$line3
+    echo "v8@units=$a$a" > part5$line3
+cat part1$line3 part2$line3 part3$line3 part4$line3 part5$line3 >PART$line3
+cat ADD$line3 PART$line3 >PARTADD$line3
+echo  "wks = gsn_open_wks($vv,$a$dir88$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($((integ+1)),graphic)" >KUCUK1_1$line3
+integ=0
+
+    for integ in {1..8..1}
+    do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a TEST$integ $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+done > KUCUK1_1ADD$line3
+
+
+echo "res@tiMainFontHeightF     = 0.023" >PARCA1$line3
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >PARCA2$line3
+echo "res@gsnCenterString  = $a $date1$a " >PARCA3$line3
+echo "plot(8) = gsn_csm_contour_map_ce(wks,v8(nt,:,:), res)" >PARCA4$line3
+cat PARCA1$line3 PARCA2$line3 PARCA3$line3 PARCA4$line3 >PARCA$line3
+cat KUCUK1_1ADD$line3 PARCA$line3 > PARCAKUCUK1_1ADD$line3
+
+
+integ=0
+cd $dir8	
+
+    for integ in {1..8..1}
+    do
+a='"'
+vv='"ps"'
+vy='"b2_2'
+abs=abs
+    echo "filename$((integ-1)) = $a./RESULT$integ/FARK/ABSFARK$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tas"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+done >PADD$line3
+
+    echo "filename8 = $a../RESULTS/RESULTENSEMBLE/ABSFARKTIMMEAN_$line3.nc$a" > apart1$line3
+    echo "f8 = addfile (filename8, $a r $a)" > apart2$line3
+    echo "v8 = f8->tas" > apart3$line3
+    echo "v8@long_name=$a$a" > apart4$line3
+    echo "v8@units=$a$a" > apart5$line3
+cat apart1$line3 apart2$line3 apart3$line3 apart4$line3 apart5$line3 >APART$line3
+cat PADD$line3 APART$line3 >PARTABSADD$line3
+echo  "wks = gsn_open_wks($vv,$a$dir88$abs$line3$a)" >ABSFILEKUCUK1_1$line3
+echo "plot = new($((integ+1)),graphic)" >ABSKUCUK1_1$line3
+integ=0
+
+    for integ in {1..8..1}
+    do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a TEST$integ $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+done > ABSKUCUK1_1ADD$line3
+
+echo "res@tiMainFontHeightF     = 0.023" >APARCA1$line3
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >APARCA2$line3
+echo "res@gsnCenterString  = $a $date1$a " >APARCA3$line3
+echo "plot(8) = gsn_csm_contour_map_ce(wks,v8(nt,:,:), res)" >APARCA4$line3
+cat APARCA1$line3 APARCA2$line3 APARCA3$line3 APARCA4$line3 >APARCA$line3
+cat ABSKUCUK1_1ADD$line3 APARCA$line3 > PARCAABSKUCUK1_1ADD$line3
+
+pwd
+cp $dir13/ncl_* .
+cat ncl_1 PARTADD$line3 >EBENINKI$line3.ncl
+cat EBENINKI$line3.ncl FILEKUCUK1_1$line3 >EBENINKI2$line3.ncl
+cat EBENINKI2$line3.ncl ncl_2 $dir8/FARKFILE0 ncl_3 KUCUK1_1$line3 PARCAKUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+
+ncl $line3.ncl
+cat ncl_1 PARTABSADD$line3 >EBENIN$line3.ncl
+cat EBENIN$line3.ncl ABSFILEKUCUK1_1$line3 ncl_2 $dir8/ABSFARKFILE0 ncl_3 ABSKUCUK1_1$line3 PARCAABSKUCUK1_1ADD$line3 ncl_4 >ABS$line3.ncl
+
+
+ncl ABS$line3.ncl
+
+done
+
+integ=0
+j=27
+
+echo "YEAR" >mevsimm
+for line3 in $(cat mevsimm)
+do
+
+cd $dir8	
+
+    for integ in {1..8..1}
+    do
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename$((integ-1)) = $a./RESULT$integ/FARK/FARK$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tas"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+done >ADD$line3
+
+    echo "filename8 = $a../RESULTS/RESULTENSEMBLE/FARKTIMMEAN_.nc$a" > part1$line3
+    echo "f8 = addfile (filename8, $a r $a)" > part2$line3
+    echo "v8 = f8->tas" > part3$line3
+    echo "v8@long_name=$a$a" > part4$line3
+    echo "v8@units=$a$a" > part5$line3
+cat part1$line3 part2$line3 part3$line3 part4$line3 part5$line3 >PART$line3
+cat ADD$line3 PART$line3 >PARTADD$line3
+echo  "wks = gsn_open_wks($vv,$a$dir88$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($((integ+1)),graphic)" >KUCUK1_1$line3
+integ=0
+
+    for integ in {1..8..1}
+    do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a TEST$integ $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+done > KUCUK1_1ADD$line3
+
+
+echo "res@tiMainFontHeightF     = 0.023" >PARCA1$line3
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >PARCA2$line3
+echo "res@gsnCenterString  = $a $date1$a " >PARCA3$line3
+echo "plot(8) = gsn_csm_contour_map_ce(wks,v8(nt,:,:), res)" >PARCA4$line3
+cat PARCA1$line3 PARCA2$line3 PARCA3$line3 PARCA4$line3 >PARCA$line3
+cat KUCUK1_1ADD$line3 PARCA$line3 > PARCAKUCUK1_1ADD$line3
+
+
+integ=0
+cd $dir8	
+
+    for integ in {1..8..1}
+    do
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename$((integ-1)) = $a./RESULT$integ/FARK/ABSFARK$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tas"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+done >PADD$line3
+
+    echo "filename8 = $a../RESULTS/RESULTENSEMBLE/ABSFARKTIMMEAN_.nc$a" > apart1$line3
+    echo "f8 = addfile (filename8, $a r $a)" > apart2$line3
+    echo "v8 = f8->tas" > apart3$line3
+    echo "v8@long_name=$a$a" > apart4$line3
+    echo "v8@units=$a$a" > apart5$line3
+cat apart1$line3 apart2$line3 apart3$line3 apart4$line3 apart5$line3 >APART$line3
+cat PADD$line3 APART$line3 >PABSADD$line3
+echo  "wks = gsn_open_wks($vv,$a$dir88$abs$line3 $a)" >ABSFILEKUCUK1_1$line3
+echo "plot = new($((integ+1)),graphic)" >ABSKUCUK1_1$line3
+integ=0
+
+    for integ in {1..8..1}
+    do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a TEST$integ $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+done > ABSKUCUK1_1ADD$line3
+
+echo "res@tiMainFontHeightF     = 0.023" >APARCA1$line3
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >APARCA2$line3
+echo "res@gsnCenterString  = $a $date1$a " >APARCA3$line3
+echo "plot(8) = gsn_csm_contour_map_ce(wks,v8(nt,:,:), res)" >APARCA4$line3
+cat APARCA1$line3 APARCA2$line3 APARCA3$line3 APARCA4$line3 >APARCA$line3
+cat ABSKUCUK1_1ADD$line3 APARCA$line3 > PARCAABSKUCUK1_1ADD$line3
+
+
+cp $dir13/ncl_* .
+cat ncl_1 PARTADD$line3 >EBENINKI$line3.ncl
+cat EBENINKI$line3.ncl FILEKUCUK1_1$line3 ncl_2 $dir8/FARKFILE0 ncl_3 KUCUK1_1$line3 PARCAKUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+ncl $line3.ncl
+cat ncl_1 PABSADD$line3 >EBENIN$line3.ncl
+cat EBENIN$line3.ncl ABSFILEKUCUK1_1$line3 ncl_2 $dir8/ABSFARKFILE0 ncl_3 ABSKUCUK1_1$line3 PARCAABSKUCUK1_1ADD$line3 ncl_4 >ABS$line3.ncl
+ncl ABS$line3.ncl
+
+done
+done
+integ=0
+j=27
+cd $dir4
+for inte3 in {40..45..1}
+#1
+do
+if((inte3==40));then
+#cd $dir40
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULT/
+dir88=RESULT
+elif((inte3==41));then
+#cd $dir41
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTRMSE/
+dir88=RESULTRMSE
+elif((inte3==42));then
+#cd $dir42
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTTEST/
+dir88=RESULTTTEST
+elif((inte3==43));then
+#cd $dir43
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTTIMCOR/
+dir88=RESULTTIMCOR
+elif((inte3==44));then
+#cd $dir44
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTTEST/
+dir88=RESULTYTTEST
+elif((inte3==45));then
+#cd $dir45
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/RESULTYTIMCOR/
+dir88=RESULTYTIMCOR
+fi
+#cd $dir8
+
+cd $dir8/MODELS2
+
+
+pwd
+ls limit*.nc >list22
+#ls ./RESULT*/FARK/FARK*.nc >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >$dir8/MAX
+cat min*.txt >$dir8/MIN
+cat ort*.txt >ORTALAMA$line22.txt
+paste ../list22 ORTALAMA$line22.txt >$dir8/RESULTLIMIT$line22-MODELS2.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cd ..
+rm -rf ARA
+
+cd $dir8
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >$dir8/FARKFILE0
+rm FILE0_*
+integ=0
+cd $dir8/MODELS2
+echo "limit_select.nc" >mevsimm
+integ=1
+for line3 in $(cat mevsimm)
+do
+cd $dir8/MODELS2
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename1 = $a$lim.nc$a"
+    echo "f1 = addfile (filename1, $a r $a)"
+    echo "v1 = f1->tas"
+    echo "v1@long_name=$a$a"
+    echo "v1@units=$a$a"
+done >ADD
+
+echo  "wks = gsn_open_wks($vv,$a$limit$a)" >FILEKUCUK1_1
+echo "plot = new(1,graphic)" >KUCUK1_1
+integ=1
+for line3 in $(cat mevsimm)
+do
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a LIMIT $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot(0) = gsn_csm_contour_map_ce(wks,v$((integ))(nt,:,:), res)"
+done > KUCUK1_1ADD
+
+
+#echo "res@tiMainFontHeightF     = 0.023" >PARCA1
+#echo "res@tiMainString     = $a LIMIT MODELS $a" >PARCA2
+#echo "res@gsnCenterString  = $a $date1$a " >PARCA3
+#echo "plot(0) = gsn_csm_contour_map_ce(wks,v0(nt,:,:), res)" >PARCA4
+#cat PARCA1 PARCA2 PARCA3 PARCA4 >PARCA
+#cat KUCUK1_1ADD PARCA > PARCAKUCUK1_1ADD
+
+
+integ=0
+cd $dir8/MODELS2	
+
+pwd
+cp $dir13/ncl_* .
+cat ncl_1 ADD FILEKUCUK1_1 ncl_2 $dir8/FARKFILE0 ncl_3 KUCUK1_1 KUCUK1_1ADD ncl_4 >limit.ncl
+
+
+
+ncl limit.ncl
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+integ=1
+j=27
+done
+
+integ=0
+j=27
+cd $dir4
+for inte3 in {40..45..1}
+#1
+do
+if((inte3==40));then
+#cd $dir40
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHOD/
+dir88=METHOD
+elif((inte3==41));then
+#cd $dir41
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHODRMSE/
+dir88=METHODRMSE
+elif((inte3==42));then
+#cd $dir42
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHODTTEST/
+dir88=METHODTTEST
+elif((inte3==43));then
+#cd $dir43
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHODTIMCOR/
+dir88=METHODTIMCOR
+elif((inte3==44));then
+#cd $dir44
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHODYTTEST/
+dir88=METHODYTTEST
+elif((inte3==45));then
+#cd $dir45
+dir8=$klasor1/$klasor2/$klasor3/$klasor4/METHODYTIMCOR/
+dir88=METHODYTIMCOR
+fi
+#cd $dir8
+
+cd $dir8
+
+
+pwd
+ls ENS*.nc >list22
+#ls ./RESULT*/FARK/FARK*.nc >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >$dir8/MAX
+cat min*.txt >$dir8/MIN
+cat ort*.txt >ORTALAMA$line22.txt
+paste ../list22 ORTALAMA$line22.txt >$dir8/RESULTMODELS$line22-MODELS2.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cd ..
+rm -rf ARA
+
+cd $dir8
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >$dir8/FARKFILE0
+rm FILE0_*
+integ=0
+cd $dir8
+echo "DJF MAM JJA SON" >mevsimm
+integ=1
+for line3 in $(cat mevsimm)
+do
+cd $dir8
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename$((integ-1)) = $a$ens$var1$symbol1$date1$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tas"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+((integ++))
+done >ADD$line3
+
+    echo "filename4 = $a$ens$var1$symbol1$date1.nc$a" > part1$line3
+    echo "f4 = addfile (filename4, $a r $a)" > part2$line3
+    echo "v4 = f4->tas" > part3$line3
+    echo "v4@long_name=$a$a" > part4$line3
+    echo "v4@units=$a$a" > part5$line3
+cat part1$line3 part2$line3 part3$line3 part4$line3 part5$line3 >PART$line3
+cat ADD$line3 PART$line3 >PARTADD$line3
+echo  "wks = gsn_open_wks($vv,$a$ens$line3$a)" >FILEKUCUK1_1$line3
+echo "plot = new($((integ)),graphic)" >KUCUK1_1$line3
+integ=1
+for line3 in $(cat mevsimm)
+do
+
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a ENS $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+((integ++))
+done > KUCUK1_1ADD$line3
+
+
+echo "res@tiMainFontHeightF     = 0.023" >PARCA1$line3
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >PARCA2$line3
+echo "res@gsnCenterString  = $a $date1$a " >PARCA3$line3
+echo "plot(4) = gsn_csm_contour_map_ce(wks,v4(nt,:,:), res)" >PARCA4$line3
+cat PARCA1$line3 PARCA2$line3 PARCA3$line3 PARCA4$line3 >PARCA$line3
+cat KUCUK1_1ADD$line3 PARCA$line3 > PARCAKUCUK1_1ADD$line3
+
+
+integ=0
+cd $dir8	
+
+pwd
+cp $dir13/ncl_* .
+cat ncl_1 PARTADD$line3 FILEKUCUK1_1$line3 ncl_2 $dir8/FARKFILE0 ncl_3 KUCUK1_1$line3 PARCAKUCUK1_1ADD$line3 ncl_4 >$line3.ncl
+
+
+
+ncl $line3.ncl
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+integ=1
+j=27
+done
+
+integ=0
+j=27
+cd $dir4
+cd $dir4/EU-OBS/merge/TIMMEAN
+
+
+pwd
+ls sel*.nc >list22
+#ls ./RESULT*/FARK/FARK*.nc >list22
+mkdir ARA
+
+for line22 in $(cat list22)
+do
+cdo infov $line22 >./ARA/a$line22.txt
+sed 1d ./ARA/a$line22.txt >./ARA/a2$line22.txt
+awk {'print $11'} ./ARA/a2$line22.txt > ./ARA/max$line22.txt
+awk {'print $9'} ./ARA/a2$line22.txt > ./ARA/min$line22.txt
+awk {'print $10'} ./ARA/a2$line22.txt > ./ARA/ort$line22.txt
+done
+
+cd ARA
+cat max*.txt >$dir4/EU-OBS/merge/TIMMEAN/MAX
+cat min*.txt >$dir4/EU-OBS/merge/TIMMEAN/MIN
+cat ort*.txt >ORTALAMA$line22.txt
+paste ../list22 ORTALAMA$line22.txt >$dir4/RESULTOBSERVATION$line22-MODELS2.txt
+rm a*.txt
+rm max*.txt
+rm min*.txt
+cd ..
+rm -rf ARA
+
+cd $dir4/EU-OBS/merge/TIMMEAN
+cp $dir4/SONUC_11.R .
+Rscript <(cat SONUC_11.R) >../forncl.txt
+cd ..
+
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+readarray arr < forncl2.txt
+echo "res@cnMinLevelValF = ${arr[0]}" >FILE0_line1
+echo "res@cnMaxLevelValF   = ${arr[1]}" >FILE0_line2
+echo "res@cnLevelSpacingF = ${arr[2]}" >FILE0_line3
+cat FILE0_line1 FILE0_line2 FILE0_line3 >$dir4/EU-OBS/merge/TIMMEAN/FARKFILE0
+rm FILE0_*
+integ=0
+cd $dir4/EU-OBS/merge/TIMMEAN
+echo "DJF MAM JJA SON" >mevsimm
+integ=1
+for line3 in $(cat mevsimm)
+do
+a='"'
+vv='"ps"'
+vy='"b2_2'
+    echo "filename$((integ-1)) = $a$sel$var1$symbol1$date1$line3.nc$a"
+    echo "f$((integ-1)) = addfile (filename$((integ-1)), $a r $a)"
+    echo "v$((integ-1)) = f$((integ-1))->tg"
+    echo "v$((integ-1))@long_name=$a$a"
+    echo "v$((integ-1))@units=$a$a"
+((integ++))
+done >ADD
+cd $dir4/EU-OBS/merge/TIMMEAN
+
+    echo "filename4 = $a$sel$var1$symbol1$date1.nc$a" > part1
+    echo "f4 = addfile (filename4, $a r $a)" > part2
+    echo "v4 = f4->tg" > part3
+    echo "v4@long_name=$a$a" > part4
+    echo "v4@units=$a$a" > part5
+cat part1 part2 part3 part4 part5 >PART
+cat ADD PART >PARTADD
+echo  "wks = gsn_open_wks($vv,$a$obs$a)" >FILEKUCUK1_1
+echo "plot = new($((integ)),graphic)" >KUCUK1_1
+integ=1
+for line3 in $(cat mevsimm)
+do
+
+echo "res@tiMainFontHeightF     = 0.023"
+echo "res@tiMainString     = $a ENS $line3 $a"
+echo "res@gsnCenterString  = $a $date1$a "
+echo "plot($((integ-1))) = gsn_csm_contour_map_ce(wks,v$((integ-1))(nt,:,:), res)"
+((integ++))
+done > KUCUK1_1ADD
+
+
+echo "res@tiMainFontHeightF     = 0.023" >PARCA1
+echo "res@tiMainString     = $a ENSEMBLE $line3 $a" >PARCA2
+echo "res@gsnCenterString  = $a $date1$a " >PARCA3
+echo "plot(4) = gsn_csm_contour_map_ce(wks,v4(nt,:,:), res)" >PARCA4
+cat PARCA1 PARCA2 PARCA3 PARCA4 >PARCA
+cat KUCUK1_1ADD PARCA > PARCAKUCUK1_1ADD
+
+
+integ=0
+cd $dir4/EU-OBS/merge/TIMMEAN	
+
+pwd
+cp $dir13/ncl_* .
+cat ncl_1 PARTADD FILEKUCUK1_1 ncl_2obs $dir8/FARKFILE0 ncl_3 KUCUK1_1 PARCAKUCUK1_1ADD ncl_4obs >OBS.ncl
+
+
+
+ncl OBS.ncl
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+
+integ=0
+j=27
+cd $dir4

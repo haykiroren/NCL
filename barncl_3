@@ -1,0 +1,4 @@
+  nmodels = dimsizes(models)
+  x          = ispan(1,nmodels,1)
+
+  rgba      = span_color_rgba("matlab_jet",nmodels)

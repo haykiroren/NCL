@@ -1,0 +1,17 @@
+  res                       = True                 ; plot mods desired         
+  res@gsnMaximize           = True                 ; maximize plot in frame
+  res@gsnDraw               = False                ; don't draw plot yet
+  res@gsnFrame              = False                ; don't advance frame yet
+
+  res@trYMinF               = 0                   ; bring bars down to zero
+  res@trXMinF               = min(x) - 1          ; adds space on either end
+  res@trXMaxF               = max(x) + 1          ; of the 1st and last bars
+  
+  res@gsnXYBarChart         = True                 ; turn on bar chart
+  res@gsnXYBarChartBarWidth = 0.75                 ; change bar widths
+  res@gsnXYBarChartColors   = rgba
+  
+  res@tmXBOn                = False                ; turn off X tickmarks and labels
+
+;---Labels for Y axis
+  res@tmYLMode              = "Explicit"

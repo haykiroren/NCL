@@ -1,0 +1,385 @@
+#$!/bin/bash
+
+klasor1=/home/isikhamza/Desktop
+klasor2=CORDEX-TAS
+klasor3=AFR
+klasor4=histo
+
+dir4=$klasor1/$klasor2/$klasor3/$klasor4
+
+
+symb=',\'
+symb2='  result = (/'
+symb3='  models =  (/'
+symb4='"'
+symb5='",\'
+symb6='/)'
+symb7="       "
+symb8=',"'
+symb9='('
+symb10=')'
+symb11=', '
+symb12='  res@tmYLLabels = (/'
+ps='ps'
+ANNUAL='ANNUAL'
+
+cd $dir4
+cd CONCLUSION/TABLE
+
+
+cd ABSFARKTIMMEAN
+cd ANNUAL
+pwd
+ls ABSFARKTIMMEANANNUAL* >liste
+sed 's/ABSFARKTIMMEANANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls ABSFARKTIMMEANDJF* >liste
+sed 's/ABSFARKTIMMEANDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls ABSFARKTIMMEANMAM* >liste
+sed 's/ABSFARKTIMMEANMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls ABSFARKTIMMEANJJA* >liste
+sed 's/ABSFARKTIMMEANJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls ABSFARKTIMMEANSON* >liste
+sed 's/ABSFARKTIMMEANSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+cd FARKTIMMEAN
+cd ANNUAL
+pwd
+ls FARKTIMMEANANNUAL* >liste
+sed 's/FARKTIMMEANANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls FARKTIMMEANDJF* >liste
+sed 's/FARKTIMMEANDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls FARKTIMMEANMAM* >liste
+sed 's/FARKTIMMEANMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls FARKTIMMEANJJA* >liste
+sed 's/FARKTIMMEANJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls FARKTIMMEANSON* >liste
+sed 's/FARKTIMMEANSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+cd TIMMEAN
+cd ANNUAL
+pwd
+ls TIMMEANANNUAL* >liste
+sed 's/TIMMEANANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls TIMMEANDJF* >liste
+sed 's/TIMMEANDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls TIMMEANMAM* >liste
+sed 's/TIMMEANMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls TIMMEANJJA* >liste
+sed 's/TIMMEANJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls TIMMEANSON* >liste
+sed 's/TIMMEANSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+cd TTEST
+cd ANNUAL
+pwd
+ls TTESTANNUAL* >liste
+sed 's/TTESTANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls TTESTDJF* >liste
+sed 's/TTESTDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls TTESTMAM* >liste
+sed 's/TTESTMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls TTESTJJA* >liste
+sed 's/TTESTJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls TTESTSON* >liste
+sed 's/TTESTSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+cd YTTEST
+cd ANNUAL
+pwd
+ls YTTESTANNUAL* >liste
+sed 's/YTTESTANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls YTTESTDJF* >liste
+sed 's/YTTESTDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls YTTESTMAM* >liste
+sed 's/YTTESTMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls YTTESTJJA* >liste
+sed 's/YTTESTJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls YTTESTSON* >liste
+sed 's/YTTESTSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+cd YTIMCOR
+cd ANNUAL
+pwd
+ls YTIMCORANNUAL* >liste
+sed 's/YTIMCORANNUAL//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../DJF
+pwd
+ls YTIMCORDJF* >liste
+sed 's/YTIMCORDJF//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../MAM
+pwd
+ls YTIMCORMAM* >liste
+sed 's/YTIMCORMAM//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../JJA
+pwd
+ls YTIMCORJJA* >liste
+sed 's/YTIMCORJJA//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../SON
+ls YTIMCORSON* >liste
+sed 's/YTIMCORSON//' liste >aliste
+sed 's/.nc.txt//' aliste > bliste
+sed 's/.nc4.txt//' bliste > models
+cd ../../
+
+
+
+
+
+
+
+
+
+cd $dir4
+cd CONCLUSION/TABLE
+
+echo "ABSFARKTIMMEAN FARKTIMMEAN TIMMEAN TTEST YTTEST YTIMCOR" >listvar
+for line14 in $(cat listvar)
+do
+cd $line14
+#cd ABSFARKTIMMEAN
+echo "ANNUAL DJF MAM JJA SON" >listm
+
+for line13 in $(cat listm)
+do
+cd $line13
+mkdir PLOT
+cp ../$line13.txt ./PLOT/MAX
+cp ../$line13.txt ./PLOT/MIN
+cp models ./PLOT/
+cp ../$line13.txt ./PLOT/$line13.txt
+
+#cat *.txt >MAX
+#cat *.txt >MIN
+cp $dir4/SONUC_11.R ./PLOT/
+cd PLOT
+Rscript <(cat SONUC_11.R) >forncl.txt
+pwd
+awk {'print $2'} forncl.txt > forncl2.txt
+rm forncl.txt
+
+
+for line in forncl2.txt
+do
+sed 's/"//' $line 
+done >forncl3.txt
+
+for line in forncl3.txt
+do
+sed 's/"//' $line 
+done >forncl4a.txt
+
+for line in $(cat forncl4a.txt)
+do 
+echo "scale=4; $line * 10" | bc
+done >forncl4b.txt
+sed 's/.\{2\}$//' forncl4b.txt >forncl4.txt
+
+cat forncl4.txt | xargs >forncl5.txt
+#readarray arr < forncl5.txt
+awk {'print "res@tmYLValues            = ispan("$1","$2","$3")*1e-1"'} forncl5.txt >barncl_6
+#  res@tmYLValues            = ispan(0,14,2)
+#echo "res@tmYLValues            = ispan( ${arr[0]},${arr[1]},${arr[2]})" >barncl_6
+
+cp $dir4/SONUC_14.R .
+Rscript <(cat SONUC_14.R) >labncl.txt
+awk {'print $2'} labncl.txt > labncl2.txt
+
+
+for line in $(cat labncl2.txt)
+do
+echo "$symb4$line$symb5"
+done >label
+
+sed '$ s/..$//' label >label2
+
+echo "$symb12 $(cat label2) $symb6" >barncl_7
+
+
+
+
+
+for line in $(cat $line13.txt)
+do
+#echo "$symb7$line$symb"
+echo "$line$symb"
+done >veri
+
+sed '$ s/..$//' veri >veri2
+
+echo "$symb2 $(cat veri2) $symb6" >vpart1
+
+
+
+#mkdir ARA
+#ls ABSFARKTIMMEANANNUAL* >liste
+#for line in  liste
+#do
+#sed 's/tas_EUR-44_//' $line >./ARA/$line
+#sed 's/_historical_//' ./ARA/$line >./ARA/a$line
+#sed 's/r2i1p1_//' ./ARA/a$line >./ARA/a2$line
+#sed 's/r1i1p1_//' ./ARA/a2$line >./ARA/b$line
+#sed 's/r12i1p1_//' ./ARA/b$line >./ARA/c$line
+#sed 's/r3i1p1_//' ./ARA/c$line > ./ARA/d$line
+#sed 's/ABSFARKTIMMEANANNUAL//' ./ARA/d$line > ./ARA/e$line
+#sed 's/.nc.txt//' ./ARA/e$line > ./ARA/f$line
+#sed 's/.nc4.txt//' ./ARA/f$line > models
+#done
+
+#cp ./ANNUAL/models .
+#rm -rf ARA
+#cd ..
+paste models $line13.txt >aaray.txt
+cp $dir4/SONUC_15.R .
+Rscript <(cat SONUC_15.R)
+paste veri3d.txt veri3c.txt >veri3.txt
+awk {'print $2" "$4'} veri3.txt >veri4.txt
+sed 1d veri4.txt >veri5.txt
+sed 's/"//' veri5.txt >veri6.txt
+sed 's/"//' veri6.txt >veri7.txt
+sed 's/"//' veri7.txt >veri8.txt
+sed 's/"//' veri8.txt >res.txt
+awk {'print $1'} res.txt >models2
+awk {'print $2'} res.txt >v$line13
+
+
+for line in $(cat models2)
+do
+echo "$symb4$line$symb5"
+done >modell
+
+sed '$ s/..$//' modell >model2
+echo "$symb3 $(cat model2) $symb6" >mpart1
+
+
+for line in $(cat v$line13)
+do
+#echo "$symb7$line$symb"
+echo "$line$symb"
+done >verii
+
+sed '$ s/..$//' verii >verii2
+
+echo "$symb2 $(cat verii2) $symb6" >vpart1
+
+
+
+cat vpart1 mpart1 >barncl_2
+
+echo "  wks = gsn_open_wks($symb4$ps$symb4$symb8$line13$symb4)" >barncl_4
+
+cp $dir4/barncl* .
+cat barncl_1 barncl_2 barncl_3 barncl_4 barncl_5 barncl_6 barncl_7 barncl_8 >drawbar$line13.ncl
+ncl drawbar$line13.ncl
+ls *.ps >listps
+for line8 in $(cat listps)
+do
+gs -q -sDEVICE=jpeg -dBATCH -dNOPAUSE -dFirstPage=1 -dLastPage=1 -r600 -sOutputFile=$line8.jpg $line8
+done
+cp *.jpg ../../
+cp *.ps ../../
+cp draw*.ncl ../../
+cd ../../
+
+done
+
+cd ../
+
+done

@@ -1,0 +1,83 @@
+#$!/bin/bash
+cd REF
+mkdir ARA2
+ls *.nc >list3
+for line21 in  list3
+do
+
+sed 's/tas_AFR-44_//' $line21 >./ARA2/$line21
+sed 's/_historical_//' ./ARA2/$line21 >./ARA2/a$line21
+sed 's/r1i1p1_//' ./ARA2/a$line21 >./ARA2/b$line21
+sed 's/r12i1p1_//' ./ARA2/b$line21 >./ARA2/c$line21
+sed 's/r3i1p1_//' ./ARA2/c$line21 >nlist3
+done
+
+paste list3 nlist3 >m1.txt
+awk '{print "mv "$1" "$2}' m1.txt >move
+chmod +x move
+./move
+
+ls *.nc >liste
+mkdir MEAN FARK S
+for list in $(cat liste)
+do
+cdo splitseas $list ./S/$list
+done
+
+
+cd S
+ls *.nc4 >liste2
+for list2 in $(cat liste2)
+do
+cdo timmean $list2 ../MEAN/$list2
+done
+cd ../
+
+
+cd ../FUT
+echo "rcp26 rcp45 rcp85" >gir
+for enter in $(cat gir)
+do
+
+cd $enter
+ls *.nc >liste
+mkdir MEANF1 MEANF2 FARKF1 FARKF2 S F1 F2
+for list in $(cat liste)
+do
+
+cdo splitseas $list ./S/$list
+done
+
+cd S
+ls *.nc4 >liste2
+for list2 in $(cat liste2)
+do
+cdo seldate,2036-01-01,2065-12-30 $list2 ../F1/$list2
+cdo seldate,2066-01-01,2095-12-30 $list2 ../F2/$list2
+cdo timmean ../F1/$list2 ../MEANF1/$list2
+cdo timmean ../F2/$list2 ../MEANF2/$list2
+cdo sub ../MEANF1/$list2 ../../../REF/MEAN/$list2 ../FARKF1/$list2 
+cdo sub ../MEANF2/$list2 ../../../REF/MEAN/$list2 ../FARKF2/$list2 
+done
+
+cd ../
+cd FARKF1
+echo "DJF.nc4 MAM.nc4 JJA.nc4 SON.nc4" >liste3
+for list3 in $(cat liste3)
+do
+
+cdo ensmean *$list3 ../ENSF1$list3
+done
+
+cd ..
+cd FARKF2
+echo "DJF.nc4 MAM.nc4 JJA.nc4 SON.nc4" >liste3
+for list3 in $(cat liste3)
+do
+
+cdo ensmean *$list3 ../ENSF2$list3
+done
+
+cd ..
+cd ..
+done

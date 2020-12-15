@@ -1,0 +1,26 @@
+  res@tiMainString          = nmodels + " CORDEX RCM-GCM Combinations"
+;  res@tiXAxisString         = " "
+
+;---Create first plot; no opacities applied
+  plot = gsn_csm_xy (wks,x,result,res)     ; Create plot, but don't draw it yet.
+  add_labelbar(wks,plot,models,rgba,1.0)    ; Attach a custom labelbar to the plot
+  draw(plot)                                   ; Draws plot and labelbar
+  frame(wks)
+
+;---Create second plot; opacity applied to labelbar colors only
+;  res@tiXAxisString = "Opacity applied to labelbar only"
+;  plot = gsn_csm_xy (wks,x,result,res)
+;  add_labelbar(wks,plot,models,rgba,0.50)
+;  draw(plot)
+;  frame(wks)
+;
+;---Create third plot; multiple opacities applied to plot and labelbar
+;  rgba(:,3) = fspan(1,0.01,nmodels)
+;  res@gsnXYBarChartColors = rgba
+;  res@tiXAxisString = "Opacity applied to bars and labelbar"
+;  plot = gsn_csm_xy (wks,x,result,res)
+;  add_labelbar(wks,plot,models,rgba,1.0)
+;  draw(plot)
+;  frame(wks)
+end
+
