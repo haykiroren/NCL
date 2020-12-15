@@ -1,0 +1,59 @@
+minlat  =  min(lat2d)
+minlon  =  min(lon2d)                             ;-- retrieve maximum latitude value
+maxlat  =  max(lat2d)                             ;-- retrieve minimum longitude value
+maxlon  =  max(lon2d) 
+  res@cnLineLabelPlacementMode = "Computed"
+ res@cnLinesOn            = False                ; Fill contours
+ res@cnLineLabelsOn        =False
+ res@cnLineLabelDensityF  = 5
+ res@cnLineLabelBackgroundColor = "white"
+  res@lbLabelBarOn         = False        
+   res@gsnSpreadColors = True               ; use full color table
+   res@gsnSpreadColorStart = 2 
+   res@gsnSpreadColorEnd   = -2 
+ res@gsnMaximize           =  True  
+;  res@cnLinesOn       = False         ; Turn off contour lines
+;  res@cnLevelSpacingF = 0.5           ; Change contour level spacing
+
+;---Zoom in on map
+;res@mpLimitMode = "Corners" ; method to zoom
+;res@mpLeftCornerLatF = lat2d(0,0)
+;res@mpLeftCornerLonF = lon2d(0,0)
+;res@mpLeftCornerLatF = lat2d(0)
+;res@mpLeftCornerLonF = lon2d(0)
+;res@mpRightCornerLatF = lat2d(dims(0)-1,dims(1)-1)
+;res@mpRightCornerLonF = lon2d(dims(0)-1,dims(1)-1)
+;res@mpRightCornerLatF = lat2d(dims(0)-1)
+;res@mpRightCornerLonF = lon2d(dims(0)-1)
+;---Zoom in on map
+res@mpLimitMode = "Corners" ; method to zoom
+res@mpLeftCornerLatF = minlat
+res@mpLeftCornerLonF = minlon
+res@mpRightCornerLatF = maxlat
+res@mpRightCornerLonF = maxlon
+;---Lat/lon arrays for overlaying on map
+  res@sfXArray        = lon2d
+  res@sfYArray        = lat2d
+
+  res@gsnAddCyclic    = False      ; Data not global, don't add lon cyclic pt
+   res@mpOutlineBoundarySets       = "National"   ; turn on country boundaries
+   res@mpGeophysicalLineColor      = "Black"
+;   res@mpGeophysicalLineDashPattern      = 1
+   res@mpGeophysicalLineThicknessF      = 0.6
+    res@mpNationalLineColor      = "Black"
+;   res@mpNationalLineDashPattern      = 1
+   res@mpNationalLineThicknessF      = 0.6
+   res@mpPerimOn                     =True
+   res@mpPerimLineColor            = "Red"
+  res@gsnDraw              = False               ; Do not draw plot
+  res@gsnFrame             = False               ; Do not advance frome
+
+
+
+;  res@cnLineLabelDensityF=2
+; res@cnLineLabelFontAspectF = 0.95
+
+  res@tiMainString             = "Constant"
+  res@cnLineLabelBackgroundColor = "Transparent"       ; white bckgrnd around label
+  res@cnLineDashSegLenF          = 1          ; assist in controlling concentration
+  res@cnLineLabelInterval        = 1      

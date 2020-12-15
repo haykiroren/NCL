@@ -1,0 +1,14 @@
+;----------------------------------------------------------------------
+; This script creates a color contour plot of temperature on a
+; NEMO grid.
+;
+; This script is identical to nemo_1.ncl, except additional
+; options are set to color fill the contours, and turn off contour
+; lines and labels.
+;
+; The NEMO grid is curvilinear, which means you have two-dimensional
+; lat/lon arrays of the same size as the data array.
+;----------------------------------------------------------------------
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"   
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
+begin

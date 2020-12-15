@@ -1,0 +1,20 @@
+
+   res@tiMainFontHeightF=0.009
+   res@tiMainFontAspectF     = 1
+   res@tiMainFontThicknessF  = 0.5
+   res@tiMainFontHeightF     = 0.017
+  resPanel                 = True                 ; panel mods desired
+  resPanel@gsnPanelLabelBar= True                 ; label bar on panel
+ resPanel@gsnPaperOrientation = "auto"          
+  resPanel@gsnMaximize         = True 
+   resPanel@lbBoxLinesOn     = False             ; turn off box lines
+  resPanel@lbLabelAutoStride = True
+  resPanel@gsnPanelFigureStringsFontHeightF     = 0.005
+  resPanel@gsnPanelFigureStrings= (/"a)","b)","c)","d)","e)","f)","g)","h)","i)","j)","k)","l)","m)","n)","o)","p)"/) ; add strings to panel
+res@txFontHeightF     = 0.036
+  gsn_panel(wks,plot,(/3,2/),resPanel)            ; draw: 2-down , 2-across
+ txres               = True
+  txres@txFontHeightF = 0.0015
+
+ 
+end

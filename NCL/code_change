@@ -1,0 +1,63 @@
+#$!/bin/bash
+dir1=/home/isikhamza/Desktop/CORDEX-TAS-EU_2/coor44/histo/EU-OBS/merge/TIMMEAN
+dir2=/home/isikhamza/Desktop/CORDEX-TAS-EU_2/NCL
+cd $dir1
+ls *.nc* >list
+cp list $dir2/
+cd $dir2
+IFS=$'\n' read -d '' -r -a lines <list
+#${lines[0]}=selTAS_1976-2005DJF.nc, ${lines[1]}=selTAS_1976-2005JJA.nc , ${lines[2]}=selTAS_1976-2005MAM.nc, ${lines[3]}=selTAS_1976-2005.nc ve ${lines[4]}=selTAS_1976-2005SON.nc
+#sed '16 c\ "filename1 =  ${lines[0]}"' model_iyi.ncl > ara.ncl
+#sed '18 c\ "filename2 = "${lines[2]}"' ara.ncl > ara2.ncl
+#sed '20 c\ "filename3 = "${lines[1]}"' ara2.ncl > ara3.ncl
+#sed '22 c\ "filename4 = "${lines[4]}"' ara3.ncl > ara4.ncl
+#sed '24 c\ "filename4 = "${lines[3]}"' ara4.ncl > eu_seas_5.ncl
+#while read -a words;do
+#printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+#done <ea_seas.ncl
+#rm ara*.ncl
+i=1
+a='"'
+while read line;do
+  if((i==16));then
+    echo "filename1 = $a${lines[0]}$a"
+  elif((i==18));then
+    echo "filename2 = "${lines[2]}""
+  elif((i==20));then
+    echo "filename3 = "${lines[1]}""
+  elif((i==22));then
+    echo "filename4 = "${lines[4]}""
+  elif((i==24));then
+    echo "filename5 = "${lines[3]}""
+  else
+    echo "$line"
+  fi
+  ((i++))
+done  < model_iyi.ncl > eu_seas.ncl
+
+while read line;do
+  if((i==16));then
+ while read -a words;do
+printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+done <ea_seas.ncl    
+  elif((i==18));then
+ while read -a words;do
+printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+done <ea_seas.ncl
+  elif((i==20));then
+ while read -a words;do
+printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+done <ea_seas.ncl
+  elif((i==22));then
+ while read -a words;do
+printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+done <ea_seas.ncl
+  elif((i==24));then
+ while read -a words;do
+printf "%s"%s"%s\n" "${words[*]:0:2}" "${words[2]}" "${words[3]}"
+done <ea_seas.ncl
+  else
+    echo "$line"
+  fi
+  ((i++))
+done  < eu_seas.ncl > eu_seas_2.ncl 

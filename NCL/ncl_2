@@ -1,0 +1,14 @@
+  lat2d    = f1->lat             ; (y,x)
+  lon2d    = f1->lon             ; (y,x)
+  nt       = 0                      ; time index to plot
+  nd       = 0                      ; depth index to plot
+dims = dimsizes(lon2d)
+gsn_define_colormap(wks,"gui_default")         ; choose colormap
+;---Set some resources
+  res                 = True
+
+;---Maximize plot in frame
+  res@gsnMaximize     = True
+
+  res@cnFillOn        = True          ; Turn on contour fill
+;  res@cnFillPalette   = "BlAqGrYeOrReVi200"
